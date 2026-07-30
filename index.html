@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מסלול Yosemite ו‑Grand Circle · אוגוסט 2026</title>
+<meta name="description" content="מסלול טיול מפורט: יוסמיטי, זיון, ברייס, פייג', מוניומנט ואלי, גרנד קניון וסדונה — עם מפות ורקע לכל מקום.">
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#fff; --ink:#242424; --muted:#6b6b6b; --line:#e6e0d4;
+    --a:#b6502b; --a-soft:#fbeee7; --b:#2f6f5e; --b-soft:#e6f1ec; --gold:#c98a2b;
+    --view:#4c5fb8; --view-soft:#e9ecfa; --warn:#c0392b; --hot:#e2571e; --hot-soft:#fdeee4;
+    --shadow:0 2px 10px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{direction:rtl; text-align:right; margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI","Helvetica Neue",Arial,"Arial Hebrew",sans-serif; line-height:1.6}
+  a{color:var(--b)}
+  .skip{position:absolute; right:-9999px; top:8px; background:var(--a); color:#fff; padding:8px 14px; border-radius:8px; z-index:100}
+  .skip:focus{right:8px}
+
+  header.top{background:linear-gradient(135deg,#b6502b,#8f3f22); color:#fff; padding:24px 16px 20px}
+  .top-in{max-width:980px; margin:0 auto}
+  header.top h1{margin:0 0 4px; font-size:1.55rem}
+  header.top p{margin:0; opacity:.92; font-size:.9rem}
+  .top-facts{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:10px; font-size:.82rem; opacity:.95}
+
+  nav.days{position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line); box-shadow:0 2px 6px rgba(0,0,0,.04)}
+  .days-in{max-width:980px; margin:0 auto; display:flex; gap:6px; overflow-x:auto; padding:10px 12px}
+  .daytab{flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:999px;
+    padding:8px 14px; font-size:.85rem; font-weight:700; cursor:pointer; white-space:nowrap; min-height:42px;
+    display:flex; flex-direction:column; align-items:center; line-height:1.15}
+  .daytab small{font-weight:400; color:var(--muted); font-size:.7rem}
+  .daytab[aria-selected="true"]{background:var(--a); border-color:var(--a); color:#fff}
+  .daytab[aria-selected="true"] small{color:#ffe7dc}
+  .daytab:focus-visible{outline:3px solid var(--view); outline-offset:2px}
+
+  main{max-width:980px; margin:0 auto; padding:16px 14px 40px}
+  .dayhead{background:var(--a-soft); border:1px solid var(--line); border-radius:16px; padding:16px 18px; margin-bottom:14px}
+  .dayhead h2{margin:0 0 8px; font-size:1.25rem; color:var(--a)}
+  .badges{display:flex; flex-wrap:wrap; gap:7px}
+  .badge{font-size:.76rem; border-radius:999px; padding:4px 11px; border:1px solid var(--line); background:#fff; color:var(--muted)}
+  .badge.ok{background:#e7f4ec; color:#1f7a4d; border-color:#bfe3cd; font-weight:700}
+  .badge.warn{background:#fdecea; color:var(--warn); border-color:#f3c9c2; font-weight:700}
+
+  .hot{background:var(--hot-soft); border:1px solid #f2ccb6; border-radius:14px; padding:13px 16px; margin-bottom:16px}
+  .hot h3{margin:0 0 7px; color:var(--hot); font-size:1rem}
+  .hot ul{margin:0; padding:0; list-style:none; display:grid; gap:6px}
+  .hot li{background:#fff; border:1px solid #f0d6c6; border-radius:9px; padding:7px 11px; font-size:.88rem; font-weight:600}
+
+  .stop{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:12px; box-shadow:var(--shadow)}
+  .stop-top{display:flex; align-items:flex-start; gap:12px}
+  .stop-ico{font-size:1.5rem; flex:0 0 auto; line-height:1.4}
+  .stop-main{flex:1; min-width:0}
+  .stop-time{display:inline-block; font-size:.72rem; font-weight:700; color:var(--b); background:var(--b-soft); border-radius:6px; padding:2px 8px; margin-bottom:4px}
+  .stop-name{font-size:1.06rem; font-weight:800; margin:0 0 4px}
+  .stop-name .bk{font-size:.68rem; color:#1f7a4d; font-weight:700; vertical-align:middle}
+  .stop-desc{font-size:.92rem; margin:0 0 8px; color:#3a3a3a}
+  .hl{list-style:none; margin:0 0 10px; padding:0}
+  .hl li{position:relative; padding:2px 18px 2px 0; font-size:.88rem; color:#444}
+  .hl li::before{content:"◂"; position:absolute; right:2px; color:var(--a); font-size:.7rem; top:5px}
+  .mapwrap{border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:8px}
+  .mapwrap iframe{display:block; width:100%; height:180px; border:0}
+  .maps{display:inline-flex; align-items:center; gap:6px; text-decoration:none; background:#fff;
+    border:1.5px solid var(--b); color:var(--b); font-weight:700; font-size:.82rem; border-radius:9px; padding:7px 12px; min-height:40px}
+  .maps:hover{background:var(--b); color:#fff}
+  .maps:focus-visible{outline:3px solid var(--view); outline-offset:2px}
+
+  .food,.tip{border-radius:12px; padding:11px 14px; margin-top:12px; font-size:.9rem}
+  .food{background:var(--b-soft)} .food b{color:var(--b)}
+  .tip{background:#fff7e8; border:1px solid #f0dca8} .tip b{color:var(--gold)}
+
+  .pager{display:flex; justify-content:space-between; gap:10px; margin-top:18px}
+  .pager button{flex:1; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:13px; font-size:.9rem; font-weight:700; cursor:pointer; color:var(--ink); min-height:48px}
+  .pager button:hover:not(:disabled){border-color:var(--a); color:var(--a)}
+  .pager button:disabled{opacity:.4; cursor:default}
+  .pager button:focus-visible{outline:3px solid var(--view); outline-offset:2px}
+  footer{max-width:980px; margin:0 auto; padding:0 14px 40px; color:var(--muted); font-size:.78rem}
+  @media(max-width:560px){ header.top h1{font-size:1.25rem} .mapwrap iframe{height:160px} }
+  @media(min-width:620px){ .hot ul{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<a href="#daypanel" class="skip">דלג לתוכן היום</a>
+<header class="top"><div class="top-in">
+  <h1>🚗 Yosemite ו‑Grand Circle</h1>
+  <p>טיול זוגי · 5–15 באוגוסט 2026 · נופים, טיולים, כבישים נופיים ואוכל ייחודי</p>
+  <div class="top-facts">
+    <span>✈️ נחיתה SFO · 5.8, 22:35</span>
+    <span>🗽 טיסה מ‑Phoenix · 15.8, 13:30</span>
+    <span>🚗 רוב הימים 2–3 שע'</span>
+  </div>
+</div></header>
+
+<nav class="days" aria-label="ניווט בין ימי הטיול"><div class="days-in" role="tablist" id="daytabs"></div></nav>
+
+<main>
+  <div id="daypanel" role="tabpanel" aria-live="polite" tabindex="-1"></div>
+  <div class="pager">
+    <button id="prevBtn" type="button">◄ היום הקודם</button>
+    <button id="nextBtn" type="button">היום הבא ►</button>
+  </div>
+</main>
+<footer>זמני נהיגה ומרחקים הם הערכות — לאשר שעות פתיחה, הזמנות והיתרים סמוך לתאריך. המפות מוטמעות מ‑Google Maps. בחירת 7 באוג': Glacier Point + Taft Point (במקום Mist Trail).</footer>
+
+<script>
+const DAYS = [
+  { date:"5 באוג'", dow:"ג'", title:"נחיתה בסן פרנסיסקו", drive:"", sleep:{name:"Hotel Aluxor SFO", st:"ok"},
+    hot:["🛬 נחיתה ומנוחה לפני היום הגדול","🍔 In‑N‑Out בדרך מחר (קלאסיקה אמריקאית)"],
+    stops:[
+      {t:"22:35", i:"✈️", n:"נחיתה ב‑SFO", booked:true, d:"סן פרנסיסקו — שער הכניסה לקליפורניה. נוחתים אחרי חניית ביניים ב‑New York; איסוף הרכב מחר בבוקר.", hl:["טיסת El Al TLV→JFK→SFO (YCBI2J)"], m:"San Francisco International Airport"},
+      {t:"לילה", i:"🛏️", n:"Hotel Aluxor SFO", booked:true, d:"מלון סמוך לשדה התעופה עם שאטל חינם — נוח ללילה קצר לפני היציאה מזרחה.", hl:["אישור 6156583021","שאטל חינם מהטרמינל"], m:"Hotel Aluxor SFO San Bruno"}
+    ]},
+  { date:"6 באוג'", dow:"ד'", title:"מ‑SFO ל‑Mariposa Grove · עמק יוסמיטי", drive:"~4.5–5 שע'", sleep:{name:"Yosemite Valley Lodge", st:"ok"},
+    hot:["🌲 Grizzly Giant — עץ סקויה בן ~3,000 שנה","🏔️ Tunnel View בשעת הזהב","🍽️ ארוחה ב‑Mountain Room מול המפל"],
+    stops:[
+      {t:"~10:15", i:"🚗", n:"יציאה מ‑SFO דרומה", d:"נסיעה אל הכניסה הדרומית של יוסמיטי דרך Oakhurst, לאורך העמק המרכזי הפורה של קליפורניה.", hl:["הצטיידות ב‑Target ו‑Trader Joe's באזור Fresno"], m:"Oakhurst California"},
+      {t:"~15:00", i:"🌲", n:"Mariposa Grove", d:"חורשת עצי הסקויה הענקיים (Giant Sequoia) — העצים הגדולים בעולם בנפחם, חלקם בני אלפי שנים. שמורה בקצה הדרומי של הפארק.", hl:["Grizzly Giant — ~3,000 שנה","California Tunnel Tree","חניה ב‑Welcome Plaza + שאטל חינם"], m:"Mariposa Grove Yosemite"},
+      {t:"~19:15", i:"🏔️", n:"Tunnel View", d:"התצפית האייקונית ביותר של יוסמיטי — נפתחת בבת אחת עם היציאה מהמנהרה. מסגרת מושלמת של El Capitan, Half Dome ו‑Bridalveil.", hl:["El Capitan משמאל","Half Dome במרכז","שקיעה ~20:00"], m:"Tunnel View Yosemite"},
+      {t:"ערב", i:"🛏️", n:"Yosemite Valley Lodge", booked:true, d:"לינה בלב עמק יוסמיטי, מרחק הליכה מ‑Yosemite Falls ומרכז העמק.", hl:["Agoda 673075567"], m:"Yosemite Valley Lodge"}
+    ],
+    food:"<b>ארוחת ערב 20:30 — Mountain Room (מוזמן ✅):</b> סטייקים ופירות ים עם חלון פנורמי אל המפל.",
+    tip:"<b>אוגוסט:</b> מפלי יוסמיטי בד\"כ יבשים. חניית Mariposa מתמלאת ביום — השאטל פותר." },
+  { date:"7 באוג'", dow:"ה'", title:"Glacier Point + Taft Point · יציאה דרך Tioga", drive:"~3.5 שע'", sleep:{name:"Mammoth Lakes", st:"warn"},
+    hot:["🥾 Taft Point — קצה צוק וסדקים דרמטיים","🏔️ Glacier Point — הנוף הכי טוב על Half Dome","🏞️ Tenaya Lake — עצירת פיקניק אלפינית","🌇 מגדלי הטופה ב‑Mono Lake"],
+    stops:[
+      {t:"בוקר מוקדם", i:"🏔️", n:"נקודות תצפית בעמק", d:"סבב בוקר קצר במראות שנשארו מאתמול, לפני שעולים לגובה.", hl:["El Capitan Meadow — מטפסים על הקיר","Valley View","Sentinel Bridge — השתקפות Half Dome"], m:"El Capitan Meadow Yosemite"},
+      {t:"~08:30", i:"🥾", n:"Taft Point", d:"מסלול קצר לקצה מצוק בגובה ~2,300 מ' עם 'סדקים' עמוקים (fissures) ותצפית ישירה על העמק — אחד הצוקים החשופים המרהיבים בפארק.", hl:["חניה ב‑Taft Point / Sentinel Dome trailhead","~1.8 ק\"מ לכיוון, ~שעה–שעה וחצי","קצה חשוף כמעט בלי מעקה — להיזהר"], m:"Taft Point Trailhead Yosemite"},
+      {t:"~11:00", i:"🏔️", n:"Glacier Point & Washburn Point", d:"תצפית‑על מפורסמת (~2,200 מ') שמשקיפה ישירות על Half Dome, על העמק כולו ועל מפלי Vernal ו‑Nevada ברקע.", hl:["Half Dome פנים אל פנים","הליכה קצרה סלולה"], m:"Glacier Point Yosemite"},
+      {t:"צהריים", i:"🚗", n:"Tioga Road", d:"הכביש הגבוה ביותר בסיירה נבדה — חוצה נופים אלפיניים של גרניט, אגמים וכרי דשא בגובה.", hl:["Olmsted Point","Tenaya Lake — פיקניק לצד האגם","Tuolumne Meadows"], m:"Olmsted Point Yosemite"},
+      {t:"שקיעה", i:"🌇", n:"Tioga Pass & Mono Lake", d:"יורדים ממעבר Tioga (2,990 מ') אל Mono Lake — אגם מלוח עתיק עם עמודי סיד (Tufa) מוזרים הבולטים מהמים.", hl:["מגדלי הטופה (Tufa)","Lee Vining"], m:"Mono Lake Tufa State Natural Reserve"},
+      {t:"לינה", i:"🛏️", n:"Mammoth Lakes", st:"warn", d:"עיירת נופש אלפינית (~2,400 מ') עם אוכל טוב, מבשלות בירה ואגמים — בסיס לילה נעים במזרח הסיירה.", hl:["~45 דק' דרומה מ‑Mono Lake","ממקמת טוב לנסיעה לוגאס מחר"], m:"Mammoth Lakes California"}
+    ],
+    tip:"<b>הבחירה שלך:</b> Glacier + Taft במקום Mist Trail. Tioga Road פתוח באוגוסט." },
+  { date:"8 באוג'", dow:"ו'", title:"ממזרח הסיירה ללאס וגאס", drive:"~5.5 שע'", sleep:{name:"לאס וגאס", st:"warn"},
+    hot:["🏜️ Alabama Hills — סלעים אדומים קולנועיים","⛲ מזרקות Bellagio","🍽️ Zuma — ארוחת ערב יפנית"],
+    stops:[
+      {t:"בוקר", i:"🏜️", n:"כביש 395 · Alabama Hills", d:"נחלת סלעים מעוגלים ואדמדמים לרגלי הרי הסיירה המושלגים — רקע לעשרות סרטי מערבונים. עצירה נופית מומלצת.", hl:["ליד Lone Pine","רקע של פסגת Mt. Whitney"], m:"Alabama Hills Lone Pine"},
+      {t:"צהריים", i:"🚗", n:"US‑95 לוגאס", d:"מסלול מדברי דרך Tonopah ו‑Beatty — קריר יותר ובטוח יותר מ‑Death Valley בקיץ.", hl:["⚠️ להימנע מ‑Death Valley בחום אוגוסט (45–50°)"], m:"Beatty Nevada"},
+      {t:"ערב", i:"🌃", n:"Las Vegas Strip", d:"לילה עירוני אחד באמצע הטבע — שדרת המלונות הנוצצת של וגאס.", hl:["מזרקות Bellagio","בר על הגג / מופע"], m:"Las Vegas Strip"}
+    ],
+    food:"<b>ארוחת ערב 21:00 — Zuma (מוזמן ✅):</b> איזקאיה יפני מודרני ב‑Cosmopolitan, 2 סועדים." },
+  { date:"9 באוג'", dow:"שבת", title:"מלאס וגאס ל‑Zion · ה‑Narrows", drive:"~2.5 שע'", sleep:{name:"Zion / Springdale", st:"warn"},
+    hot:["💧 The Narrows — צעידה בנהר בין קירות הקניון","🌿 Riverside Walk לאור אחר הצהריים"],
+    stops:[
+      {t:"~11:00–12:00", i:"🚗", n:"יציאה מוגאס", d:"בוקר נינוח בעיר; שימו לב להפרש השעות בכניסה ל‑Utah (שעה קדימה).", hl:["לאסוף נעלי מים ומקלות ל‑Narrows ב‑Springdale"], m:"Springdale Utah"},
+      {t:"~15:00", i:"🚌", n:"שאטל Zion", d:"בקיץ הקניון סגור לרכבים פרטיים — שאטל חינם מוביל לכל התחנות, עד Temple of Sinawava.", hl:["חניה במרכז המבקרים","מומלץ Cable Mountain Lodge — צמוד לשאטל"], m:"Zion Canyon Visitor Center"},
+      {t:"אחה\"צ", i:"💧", n:"The Narrows", d:"אחד הטיולים המפורסמים בעולם — צועדים בתוך נהר Virgin בין קירות אדומים בגובה מאות מטרים, במקום שהקניון מצטמצם לרוחב של מטרים בודדים.", hl:["Riverside Walk (~2 ק\"מ) מוביל להתחלה","מתקדמים כמה שבא ומסתובבים","אור אחה\"צ נעים ופחות עומס"], m:"The Narrows Zion"}
+    ],
+    food:"<b>ארוחת ערב ב‑Springdale:</b> Bit & Spur (מקסיקני אגדי), King's Landing Bistro, או Spotted Dog.",
+    tip:"<b>מונסון:</b> סיכון שיטפונות גבוה יותר אחה\"צ — לבדוק תחזית במרכז המבקרים לפני הכניסה." },
+  { date:"10 באוג'", dow:"א'", title:"מנהרת Zion · Canyon Overlook · Bryce", drive:"~2 שע'", sleep:{name:"Ruby's Inn, Bryce", st:"ok"},
+    hot:["🥾 Canyon Overlook Trail — תצפית קצרה ומרהיבה","🧡 Navajo Loop + Queen's Garden בין ה‑hoodoos","🌌 שמי כוכבים ב‑Bryce (Dark Sky)"],
+    stops:[
+      {t:"בוקר", i:"🚗", n:"Zion–Mt. Carmel Highway", d:"כביש הנדסי מ‑1930 עם סרפנטינות ומנהרה ארוכה החצובה בתוך הצוק — נופים אחרים לגמרי של Zion המזרחי.", hl:["מנהרה באורך 1.8 ק\"מ"], m:"Zion Mount Carmel Tunnel"},
+      {t:"אחרי המנהרה", i:"🥾", n:"Canyon Overlook Trail", d:"מסלול קצר וקל לתצפית פתוחה אל תוך קניון Zion התחתון — תמורה עצומה למאמץ קטן.", hl:["1.5 ק\"מ, ~שעה","חניה ליד פתח המנהרה המזרחי"], m:"Canyon Overlook Trail Zion"},
+      {t:"אחה\"צ", i:"🥾", n:"Bryce — Navajo & Queen's Garden", d:"Bryce אינו קניון אלא מדרון עמוס ב‑hoodoos — עמודי סלע כתומים שנוצרו מבליית קרח. המסלול יורד ביניהם.", hl:["Navajo Loop + Queen's Garden (~5 ק\"מ)","תצפיות: Sunrise, Sunset, Inspiration, Bryce Point"], m:"Bryce Canyon Amphitheater"},
+      {t:"שקיעה", i:"🌇", n:"Sunset / Inspiration Point", d:"שקיעה על אלפי ה‑hoodoos, ואז שמי כוכבים — Bryce הוא מהמקומות הכהים בארה\"ב (Dark Sky Park).", hl:["משמי הכוכבים הטובים בארה\"ב"], m:"Sunset Point Bryce Canyon"},
+      {t:"לינה", i:"🛏️", n:"Best Western Ruby's Inn", booked:true, d:"מוסד ותיק ממש בכניסה ל‑Bryce.", hl:["אישור 5887809935 (10→11 באוג')"], m:"Best Western Plus Ruby's Inn Bryce"}
+    ],
+    food:"<b>ארוחת ערב:</b> Stone Hearth Grille (רומנטי, נוף שקיעה) או Bryce Canyon Lodge ההיסטורי." },
+  { date:"11 באוג'", dow:"ב'", title:"זריחת Bryce · Antelope · Lake Powell", drive:"~2.5 שע'", sleep:{name:"Page", st:"warn"},
+    hot:["🌅 זריחת Bryce מ‑Sunrise Point","🎟️ Lower Antelope Canyon","🏊 שחייה ב‑Lake Powell","🌇 Horseshoe Bend בשקיעה"],
+    stops:[
+      {t:"זריחה", i:"🌅", n:"זריחת Bryce", d:"אור ראשון צובע את ה‑hoodoos בכתום בוהק — הרגע הכי יפה בפארק. ואז צ'ק‑אאוט לכיוון Page.", hl:["Sunrise Point או Bryce Point"], m:"Sunrise Point Bryce Canyon"},
+      {t:"14:15", i:"🎟️", n:"Lower Antelope Canyon", booked:true, d:"סלוט קניון (slot canyon) על אדמת Navajo — מסדרון צר וגלי שהמים חצבו בסלע החול, עם קרני אור דרמטיות. סיור בהדרכה בלבד.", hl:["Dixie's — מוזמן ל‑14:15","~1.5 שע'"], m:"Lower Antelope Canyon Page"},
+      {t:"~16:00", i:"🏊", n:"Lake Powell", d:"מאגר ענק על נהר הקולורדו, מים כחולים בין צוקי אבן חול אדומה — מושלם לשחייה או שיט קליל בחום אחר הצהריים.", hl:["Lone Rock Beach — חוף חולי","או קיאק/סאפ ב‑Wahweap"], m:"Lone Rock Beach Lake Powell"},
+      {t:"שקיעה", i:"🌇", n:"Horseshoe Bend", d:"פיתול פרסה מושלם של נהר הקולורדו במעמקים של ~300 מ' — אחת התצפיות המצולמות באמריקה.", hl:["הליכה 1.2 ק\"מ מהחניה","צפוף בשקיעה — או לשמור לבוקר מחר"], m:"Horseshoe Bend Page"}
+    ],
+    food:"<b>ארוחת ערב ב‑Page:</b> Big John's Texas BBQ, Rustic Thistle (דרומי), או State 48.",
+    tip:"<b>אזור שעות:</b> Antelope בשעון Navajo (קיץ) בעוד Page ו‑Horseshoe Bend באריזונה (שעה אחורה) — לוודא את שעת הסיור." },
+  { date:"12 באוג'", dow:"ג'", title:"מ‑Page ל‑Monument Valley", drive:"~2 שע'", sleep:{name:"Hampton Inn Kayenta", st:"ok"},
+    hot:["📸 Forrest Gump Point","🏜️ Valley Drive בין המסות","🌇 שקיעה על ה‑Mittens"],
+    stops:[
+      {t:"בוקר", i:"🌅", n:"Horseshoe Bend / Glen Canyon Dam", d:"אם שמרתם את Horseshoe Bend לבוקר — עכשיו (פחות עומס). אחרת עצירה מהירה בתצפית סכר Glen Canyon.", hl:["Glen Canyon Dam Overlook"], m:"Glen Canyon Dam Overlook"},
+      {t:"~10:30", i:"📸", n:"Forrest Gump Point", d:"נקודה על כביש 163 שבה הכביש הישר נמתח אל מסות הענק באופק — הפריים מהסרט 'פורסט גאמפ'.", hl:["עצירת תמונה קלאסית"], m:"Forrest Gump Point Highway 163"},
+      {t:"צהריים", i:"🏜️", n:"Monument Valley — Valley Drive", d:"סמל המערב הפרוע: מסות ומגדלי אבן חול אדומה בגובה מאות מטרים, על אדמת Navajo. נהיגה עצמית בלולאת עפר.", hl:["The Mittens · Merrick Butte","John Ford's Point","סיור Navajo לאזורים המוגבלים"], m:"Monument Valley Navajo Tribal Park"},
+      {t:"שקיעה", i:"🌇", n:"שקיעה על ה‑Mittens", d:"האור נמוך צובע את המסות באדום עמוק — מהנופים האייקוניים באמריקה. ואז ~30 דק' ל‑Kayenta.", hl:["The View — נקודת שקיעה מיתולוגית"], m:"The View Hotel Monument Valley"},
+      {t:"לינה", i:"🛏️", n:"Hampton Inn Kayenta", booked:true, d:"בעיירת Kayenta, שער מוניומנט ואלי.", hl:["אישור 5653314303"], m:"Hampton Inn Kayenta Monument Valley"}
+    ],
+    food:"<b>ארוחת ערב:</b> Amigo Café או Blue Coffee Pot ב‑Kayenta, או The View בפארק.",
+    tip:"<b>שימו לב:</b> Navajo Nation בשעון קיץ (בשונה משאר אריזונה); מכירת אלכוהול מוגבלת." },
+  { date:"13 באוג'", dow:"ד'", title:"Grand Canyon · Williams · Sedona", drive:"~5 שע'", sleep:{name:"Amara Resort, Sedona", st:"warn"},
+    hot:["🗼 Desert View Watchtower","🏔️ Mather / Yavapai Points","🛣️ Route 66 ב‑Williams","🚗 כביש Oak Creek Canyon"],
+    stops:[
+      {t:"~06:30", i:"🚗", n:"נסיעה דרך Cameron", d:"יציאה מוקדמת מ‑Kayenta אל הכניסה המזרחית של הגרנד קניון, לאור בוקר קריר.", hl:["Cameron Trading Post — עצירה בדרך"], m:"Cameron Trading Post Arizona"},
+      {t:"בוקר", i:"🏔️", n:"Desert View Drive", d:"אחד מפלאי הטבע הגדולים: תהום בעומק ~1.6 ק\"מ שחצב נהר הקולורדו במשך מיליוני שנים. כניסה דרמטית לאורך השפה.", hl:["Desert View Watchtower","Lipan Point — רואים את הקולורדו","Grandview Point"], m:"Desert View Watchtower Grand Canyon"},
+      {t:"צהריים", i:"🥾", n:"Rim Trail (הכפר)", d:"טיול קל ומרהיב לאורך שפת הקניון בין התצפיות המרכזיות.", hl:["Mather Point","Yavapai Point + מוזיאון גיאולוגי"], m:"Mather Point Grand Canyon"},
+      {t:"~15:00", i:"🛣️", n:"Williams — Route 66", d:"העיירה האחרונה על Route 66 ההיסטורי שנעקפה — שלטי ניאון, דיינרים ואווירת שנות ה‑50.", hl:["תחנת Grand Canyon Railway","דיינר / גלידה"], m:"Williams Arizona"},
+      {t:"~18:30", i:"🌇", n:"Oak Creek Canyon → Sedona", d:"אחד הכבישים היפים באריזונה — ירידה מיוערת אל צוקי הברזל האדומים של Sedona.", hl:["כביש 89A","שקיעה מעל הסלעים האדומים"], m:"Oak Creek Canyon Arizona"},
+      {t:"לינה", i:"🛏️", n:"Amara Resort & Spa", st:"warn", d:"ריזורט בוטיק (Kimpton) במרחק הליכה מ‑Uptown, עם בריכה, גישה לנחל ונוף לסלעים האדומים.", hl:["2 לילות (13–14 באוג')","בריכה + מסעדת SaltRock"], m:"Amara Resort and Spa Sedona"}
+    ],
+    food:"<b>ארוחת ערב ב‑Sedona:</b> Elote Cafe (אייקוני, בלי הזמנות) או SaltRock במלון אחרי יום ארוך." },
+  { date:"14 באוג'", dow:"ה'", title:"יום מלא ב‑Sedona", drive:"מקומי", sleep:{name:"Amara Resort, Sedona", st:"warn"},
+    hot:["🥾 Devil's Bridge / Cathedral Rock","⛪ Chapel of the Holy Cross","🍷 יין ב‑Page Springs","🌇 שקיעה ב‑Airport Mesa"],
+    stops:[
+      {t:"מוקדם", i:"🥾", n:"טיול בוקר", d:"סדונה עטופה בצוקי אבן חול אדומה ובשבילים מהיפים באריזונה — יוצאים עם שחר לפני החום.", hl:["Devil's Bridge — קשת סלע מפורסמת","Cathedral Rock — קצר ותלול","West Fork Trail — צל ומים ביום חם"], m:"Devil's Bridge Trailhead Sedona"},
+      {t:"צהריים", i:"🛍️", n:"Uptown Sedona", d:"לב העיר — גלריות אמנות, חנויות ובתי קפה, ומנוחה בבריכת המלון בשעות החמות.", hl:["ארוחת צהריים באזור"], m:"Uptown Sedona"},
+      {t:"אחה\"צ", i:"⛪", n:"לבחור אחד", d:"פעילות אחר הצהריים לפי מצב הרוח — רוחניות, אדרנלין או יין.", hl:["Chapel of the Holy Cross — כנסייה בתוך הסלע","סיור ג'יפים (Broken Arrow)","יין ב‑Page Springs","עיירת המכרות Jerome"], m:"Chapel of the Holy Cross Sedona"},
+      {t:"שקיעה", i:"🌇", n:"Airport Mesa / Bell Rock", d:"תצפית מעגלית על העיר והצוקים — מנקודות השקיעה הטובות בסדונה.", hl:["Airport Mesa Overlook"], m:"Airport Mesa Overlook Sedona"}
+    ],
+    food:"<b>ארוחת ערב ב‑Sedona:</b> Mariposa (רומנטי, נוף), Cress on Oak Creek, או Canyon Echo.",
+    tip:"<b>Sedona באוגוסט:</b> ~37° בצהריים — לטייל עם שחר, לנוח בצהריים, וליהנות מהערב." },
+  { date:"15 באוג'", dow:"ו'", title:"מ‑Sedona ל‑Phoenix · טיסה ל‑New York", drive:"~2 שע'", sleep:{name:"Arlo SoHo, NYC", st:"ok"},
+    hot:["✈️ טיסה ל‑New York — סוף ה‑road trip","🗽 מתחילים את הפרק של NYC"],
+    stops:[
+      {t:"~08:30", i:"🚗", n:"נסיעה ל‑Phoenix", d:"יוצאים ישר לשדה (~2 שע') — אין זמן לפעילויות לפני הטיסה.", hl:["להיות ב‑PHX עד ~11:00"], m:"Phoenix Sky Harbor International Airport"},
+      {t:"13:30", i:"✈️", n:"American AA566 PHX→JFK", booked:true, d:"טיסה ל‑New York, נחיתה בערב.", hl:["אסמכתא YVZEYQ"], m:"Phoenix Sky Harbor International Airport"},
+      {t:"ערב", i:"🛏️", n:"Arlo SoHo, New York", booked:true, d:"מתחיל הפרק של NYC — ה‑road trip הסתיים! 🎉", hl:["אישור 6682909742","16–20/8 בדירת חבר","חזרה El Al JFK→TLV ב‑20/8"], m:"Arlo SoHo New York"}
+    ]}
+];
+
+const tabs=document.getElementById('daytabs'), panel=document.getElementById('daypanel');
+const prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
+let cur=0;
+DAYS.forEach((day,idx)=>{
+  const b=document.createElement('button');
+  b.className='daytab'; b.setAttribute('role','tab'); b.id='tab-'+idx; b.setAttribute('aria-controls','daypanel');
+  b.innerHTML=day.date.replace(" באוג'","")+'<small>'+day.dow+'</small>';
+  b.addEventListener('click',()=>select(idx));
+  b.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){e.preventDefault();select(Math.min(cur+1,DAYS.length-1),true);}
+    if(e.key==='ArrowRight'){e.preventDefault();select(Math.max(cur-1,0),true);}
+  });
+  tabs.appendChild(b);
+});
+function mapUrl(q){ return 'https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=13&output=embed'; }
+function linkUrl(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q); }
+function render(day){
+  const sleep=day.sleep?`<span class="badge ${day.sleep.st==='ok'?'ok':'warn'}">🛏️ ${day.sleep.name} ${day.sleep.st==='ok'?'✅':'— לא הוזמן ⚠️'}</span>`:'';
+  const drive=day.drive?`<span class="badge">🚗 ${day.drive}</span>`:'';
+  let html=`<div class="dayhead"><h2>${day.date} · ${day.title}</h2><div class="badges">${drive}${sleep}</div></div>`;
+  if(day.hot&&day.hot.length){
+    html+=`<div class="hot"><h3>🔥 המלצות חמות ליום</h3><ul>${day.hot.map(h=>`<li>${h}</li>`).join('')}</ul></div>`;
+  }
+  day.stops.forEach(s=>{
+    const bk=s.booked?' <span class="bk">✅ מוזמן</span>':(s.st==='warn'?' <span class="bk" style="color:#c0392b">⚠️</span>':'');
+    const hls=(s.hl||[]).map(h=>`<li>${h}</li>`).join('');
+    html+=`<article class="stop"><div class="stop-top">
+      <div class="stop-ico" aria-hidden="true">${s.i}</div>
+      <div class="stop-main">
+        <span class="stop-time">${s.t}</span>
+        <h3 class="stop-name">${s.n}${bk}</h3>
+        <p class="stop-desc">${s.d}</p>
+        ${hls?`<ul class="hl">${hls}</ul>`:''}
+        <div class="mapwrap"><iframe loading="lazy" title="מפה: ${s.n}" src="${mapUrl(s.m)}"></iframe></div>
+        <a class="maps" href="${linkUrl(s.m)}" target="_blank" rel="noopener" aria-label="פתח ${s.n} ב‑Google Maps">📍 פתח בגוגל מפס</a>
+      </div></div></article>`;
+  });
+  if(day.food) html+=`<div class="food">🍽️ ${day.food}</div>`;
+  if(day.tip) html+=`<div class="tip">💡 ${day.tip}</div>`;
+  panel.innerHTML=html;
+}
+function select(idx,keepFocus){
+  cur=idx;
+  document.querySelectorAll('.daytab').forEach((t,i)=>{
+    const sel=i===idx;
+    t.setAttribute('aria-selected',sel?'true':'false');
+    t.setAttribute('tabindex',sel?'0':'-1');
+    if(sel&&keepFocus) t.focus();
+    if(sel) t.scrollIntoView({inline:'center',block:'nearest'});
+  });
+  render(DAYS[idx]);
+  prevBtn.disabled=idx===0; nextBtn.disabled=idx===DAYS.length-1;
+  panel.focus({preventScroll:true});
+}
+prevBtn.addEventListener('click',()=>select(Math.max(cur-1,0)));
+nextBtn.addEventListener('click',()=>select(Math.min(cur+1,DAYS.length-1)));
+select(0);
+</script>
+</body>
+</html>
