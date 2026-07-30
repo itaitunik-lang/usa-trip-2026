@@ -1,0 +1,62 @@
+{
+  "updated": "2026-07-30",
+  "note": "מתעדכן מהתיקייה ב‑Cowork ומהמיילים בתווית USA TRIP.",
+  "open": [
+    {
+      "id": "hotel-mammoth",
+      "title": "לינה ל‑7 באוגוסט — Mammoth Lakes",
+      "cat": "🛏️ לינה",
+      "urgency": "urgent",
+      "note": "הלילה היחיד שעדיין לא סגור. עיירת נופש אלפינית ~45 דק' דרומה מ‑Mono Lake, ממקמת טוב לנסיעה לוגאס למחרת. אוגוסט = עונת שיא, המחירים עולים ככל שמתקרבים."
+    },
+    {
+      "id": "park-pass",
+      "title": "כרטיס America the Beautiful ($80 לשנה)",
+      "cat": "🎟️ כרטיסים",
+      "urgency": "soon",
+      "note": "מכסה כניסה ל‑Yosemite, Zion, Bryce וגרנד קניון — זול יותר מתשלום בכל שער בנפרד. אפשר לקנות אונליין או בפארק הראשון."
+    },
+    {
+      "id": "monument-valley-entry",
+      "title": "כניסה ל‑Monument Valley (12 באוג')",
+      "cat": "🎟️ כרטיסים",
+      "urgency": "soon",
+      "note": "Navajo Tribal Park — תשלום נפרד, לא מכוסה על ידי כרטיס הפארקים."
+    },
+    {
+      "id": "narrows-gear",
+      "title": "נעלי מים ומקלות ל‑Narrows",
+      "cat": "🥾 ציוד",
+      "urgency": "soon",
+      "note": "משכירים ב‑Springdale בדרך לפארק (9 באוג'). Zion Outfitter או Zion Guru — חבילה של נעליים, גרבי נאופרן ומקל."
+    },
+    {
+      "id": "sedona-dinner",
+      "title": "הזמנת ערב בסדונה (13 או 14 באוג')",
+      "cat": "🍽️ מסעדות",
+      "urgency": "optional",
+      "note": "Mariposa (נוף, רומנטי) או Cress on Oak Creek — כדאי להזמין. Elote Cafe לא מקבל הזמנות, צריך להגיע מוקדם."
+    },
+    {
+      "id": "monument-valley-tour",
+      "title": "סיור Navajo מודרך ב‑Monument Valley",
+      "cat": "🎟️ כרטיסים",
+      "urgency": "optional",
+      "note": "רק אם רוצים יותר מלולאת הנהיגה העצמית — הסיור נכנס לאזורים המוגבלים לתיירים."
+    }
+  ],
+  "done": [
+    { "title": "רכב שכור SFO → Phoenix (אופרן)", "note": "הוזמן 11/7" },
+    { "title": "8 באוג' — The LINQ, לאס וגאס", "note": "הוזמן 4/7 דרך Agoda" },
+    { "title": "9 באוג' — Cable Mountain Lodge, Springdale", "note": "הוזמן 18/7 — צמוד לשאטל של Zion" },
+    { "title": "11 באוג' — The Wesley Boutique Hotel, Page", "note": "הוזמן 17/7" },
+    { "title": "13–15 באוג' — Amara Resort & Spa, סדונה", "note": "הוזמן 20/7, 2 לילות" },
+    { "title": "Ruby's Inn הוזז ל‑10→11 באוג'", "note": "עודכן 27/6" },
+    { "title": "Lower Antelope Canyon → 14:15 (11 באוג')", "note": "הוזז לאחה\"צ, הסיור של 9:15 בוטל" },
+    { "title": "טיסות El Al ו‑AA566 PHX→JFK", "note": "כרטיסים הונפקו" },
+    { "title": "5 באוג' — Hotel Aluxor SFO", "note": "כולל שאטל מהטרמינל" },
+    { "title": "6 באוג' — Yosemite Valley Lodge + Mountain Room 20:30", "note": "לינה וארוחה מוזמנות" },
+    { "title": "12 באוג' — Hampton Inn Kayenta", "note": "כולל ארוחת בוקר" },
+    { "title": "15 באוג' — Arlo SoHo, ניו יורק", "note": "16–20/8 בדירת חבר, חזרה 20/8" }
+  ]
+}
