@@ -186,6 +186,29 @@
     border-radius:999px; padding:5px 12px; color:var(--ink-2)}
   .chip.key{background:var(--a-soft); border-color:#5c2c1a; color:#ff9066; font-weight:700}
 
+  /* places */
+  .daygroup{display:flex; align-items:baseline; gap:10px; margin:26px 2px 12px; padding-bottom:8px;
+    border-bottom:1px solid var(--line)}
+  .daygroup:first-of-type{margin-top:6px}
+  .dg-date{font-weight:800; color:var(--a); font-size:.95rem; white-space:nowrap}
+  .dg-title{color:var(--muted); font-size:.83rem}
+  .place{background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+    padding:16px 18px; margin-bottom:12px; box-shadow:var(--shadow)}
+  .pl-h{display:flex; align-items:center; gap:12px}
+  .pl-ico{font-size:1.5rem; flex:0 0 auto}
+  .pl-t h3{margin:0; font-size:1.08rem}
+  .pl-he{color:var(--muted); font-size:.82rem}
+  .pl-tags{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 11px}
+  .ptag{font-size:.72rem; background:var(--b-soft); border:1px solid #235049; color:var(--b);
+    border-radius:999px; padding:2px 10px; font-weight:700}
+  .pl-story{margin:0 0 11px; font-size:.92rem; color:var(--ink-2); line-height:1.72}
+  .pl-facts{list-style:none; margin:0; padding:0; display:grid; gap:7px}
+  .pl-facts li{position:relative; padding:0 20px 0 0; font-size:.88rem; color:var(--ink-2)}
+  .pl-facts li::before{content:"◆"; position:absolute; right:2px; top:1px; color:var(--gold); font-size:.62rem}
+  .pl-know{margin-top:12px; background:var(--gold-soft); border:1px solid #5a4520;
+    border-radius:11px; padding:10px 13px; font-size:.86rem; color:var(--ink-2)}
+  .pl-know b{color:var(--gold)}
+
   /* packing */
   .progress{display:flex; align-items:center; gap:12px; margin-bottom:16px}
   .pbar{flex:1; height:9px; background:var(--card-2); border:1px solid var(--line-2);
@@ -248,6 +271,7 @@
   <nav aria-label="ניווט ראשי">
     <button class="mitem" data-view="itinerary"><span class="ic">🗺️</span> המסלול</button>
     <button class="mitem" data-view="tasks"><span class="ic">📝</span> משימות פתוחות <span class="ct" id="ctTasks">–</span></button>
+    <button class="mitem" data-view="places"><span class="ic">📖</span> רקע על האתרים <span class="ct" id="ctPlaces">–</span></button>
     <button class="mitem" data-view="clothing"><span class="ic">🎒</span> מה ללבוש</button>
     <button class="mitem" data-view="packing"><span class="ic">🧳</span> ציוד לארוז <span class="ct" id="ctPack">–</span></button>
     <button class="mitem" data-view="expenses"><span class="ic">💳</span> הוצאות <span class="ct" id="ctExp">–</span></button>
@@ -280,7 +304,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const view = $("#view"), tabs = $("#daytabs"), pager = $("#pager"), daysNav = $("#daysNav");
 
-let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, WX = null;
+let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, PLACES = null, WX = null;
 let cur = 0, currentView = "itinerary";
 
 /* ---------------- drawer ---------------- */
@@ -527,6 +551,36 @@ function renderClothing(){
   return html;
 }
 
+function renderPlaces(){
+  if (!PLACES) return `<p class="empty">לא נטען מידע על האתרים.</p>`;
+
+  let html = `<div class="page-h"><h2>📖 רקע על האתרים</h2><p>${esc(PLACES.intro)}</p></div>`;
+
+  /* one group per travel day, in itinerary order */
+  DATA.days.forEach(day => {
+    const rows = PLACES.places.filter(p => p.iso === day.iso);
+    if (!rows.length) return;
+    html += `<div class="daygroup"><span class="dg-date">${esc(day.date)}</span>
+      <span class="dg-title">${esc(day.title)}</span></div>`;
+    rows.forEach(p => {
+      html += `<article class="place">
+        <div class="pl-h">
+          <span class="pl-ico" aria-hidden="true">${p.icon}</span>
+          <div class="pl-t">
+            <h3>${esc(p.n)}</h3>
+            <span class="pl-he">${esc(p.he)}</span>
+          </div>
+        </div>
+        <div class="pl-tags">${p.tags.map(t => `<span class="ptag">${esc(t)}</span>`).join("")}</div>
+        <p class="pl-story">${esc(p.story)}</p>
+        <ul class="pl-facts">${p.facts.map(f => `<li>${esc(f)}</li>`).join("")}</ul>
+        ${p.know ? `<div class="pl-know"><b>כדאי לדעת:</b> ${esc(p.know)}</div>` : ""}
+      </article>`;
+    });
+  });
+  return html;
+}
+
 function renderPacking(){
   if (!PACKING) return `<p class="empty">לא נטענה רשימת הציוד.</p>`;
   const saved = JSON.parse(localStorage.getItem("tripPacking") || "{}");
@@ -631,6 +685,7 @@ function show(name){
   pager.hidden = !isItin;
   if (isItin) selectDay(cur);
   else view.innerHTML = name === "tasks" ? renderTasks()
+                      : name === "places" ? renderPlaces()
                       : name === "clothing" ? renderClothing()
                       : name === "packing" ? renderPacking()
                       : renderExpenses();
@@ -662,13 +717,14 @@ view.addEventListener("change", e => {
 async function boot(){
   let loadErr = null;
   try {
-    const [d, t, e, p] = await Promise.all([
+    const [d, t, e, p, pl] = await Promise.all([
       fetch("data/days.json").then(r => r.json()),
       fetch("data/tasks.json").then(r => r.json()).catch(() => null),
       fetch("data/expenses.json").then(r => r.json()).catch(() => null),
-      fetch("data/packing.json").then(r => r.json()).catch(() => null)
+      fetch("data/packing.json").then(r => r.json()).catch(() => null),
+      fetch("data/places.json").then(r => r.json()).catch(() => null)
     ]);
-    DATA = d; TASKS = t; EXPENSES = e; PACKING = p;
+    DATA = d; TASKS = t; EXPENSES = e; PACKING = p; PLACES = pl;
   } catch (err) {
     view.innerHTML = `<p class="empty">לא הצלחתי לטעון את נתוני הטיול.<br>${esc(err.message)}</p>`;
     return;
@@ -681,6 +737,7 @@ async function boot(){
   $("#ctExp").textContent = EXPENSES ? EXPENSES.items.length : "–";
   $("#ctPack").textContent = PACKING
     ? PACKING.sections.reduce((a, s) => a + s.items.length, 0) : "–";
+  $("#ctPlaces").textContent = PLACES ? PLACES.places.length : "–";
   $("#foot").textContent = "זמני נהיגה ומרחקים הם הערכות — לאשר שעות פתיחה, הזמנות והיתרים סמוך לתאריך. " +
     "מפות מוטמעות מ‑Google Maps, תחזית מ‑Open‑Meteo.";
 
