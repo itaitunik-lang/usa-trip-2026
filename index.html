@@ -186,6 +186,50 @@
     border-radius:999px; padding:5px 12px; color:var(--ink-2)}
   .chip.key{background:var(--a-soft); border-color:#5c2c1a; color:#ff9066; font-weight:700}
 
+  /* flights */
+  .banner{background:var(--warn-soft); border:1px solid #6b2f2a; border-radius:12px;
+    padding:12px 15px; margin-bottom:18px; font-size:.88rem; color:var(--ink-2)}
+  .flight{background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+    padding:15px 17px; margin-bottom:12px; box-shadow:var(--shadow)}
+  .fl-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:13px}
+  .fl-no{font-weight:800; font-size:1.05rem; color:var(--a); background:var(--a-soft);
+    border:1px solid #5c2c1a; border-radius:8px; padding:2px 10px}
+  .fl-air{font-size:.85rem; color:var(--ink-2)}
+  .fl-op{color:var(--gold); font-weight:700}
+  .fl-date{margin-inline-start:auto; font-size:.8rem; color:var(--muted)}
+  .fl-route{display:flex; align-items:center; gap:12px}
+  .fl-end{flex:0 0 auto; min-width:92px}
+  .fl-code{font-size:1.5rem; font-weight:800; letter-spacing:-.02em; line-height:1.1}
+  .fl-time{font-size:1rem; font-weight:700; color:var(--b)}
+  .fl-meta{font-size:.74rem; color:var(--muted); margin-top:3px; line-height:1.45}
+  .fl-mid{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:0}
+  .fl-dur{font-size:.75rem; color:var(--muted); white-space:nowrap}
+  .fl-line{width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--line-2) 15%,var(--line-2) 85%,transparent); position:relative}
+  .fl-line::after{content:"✈"; position:absolute; left:50%; top:-9px; transform:translateX(-50%) scaleX(-1);
+    background:var(--card); padding:0 6px; color:var(--a); font-size:.8rem}
+  .fl-rows{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:13px; padding-top:12px;
+    border-top:1px solid var(--line); font-size:.83rem; color:var(--ink-2)}
+  .fl-rows b{color:var(--muted); font-weight:600; margin-inline-end:5px}
+  .flight .hl{margin:11px 0 0}
+  .layover{background:var(--card-2); border:1px dashed var(--line-2); border-radius:13px;
+    padding:12px 16px; margin-bottom:12px}
+  .lay-h{font-size:.9rem; margin-bottom:5px}
+  .lay-h b{color:var(--gold)}
+  .layover p{margin:0; font-size:.85rem; color:var(--ink-2)}
+  .lay-warn{margin-top:9px; background:var(--warn-soft); border:1px solid #6b2f2a;
+    border-radius:10px; padding:9px 12px; font-size:.84rem; color:var(--ink-2)}
+
+  /* nyc */
+  .base{background:linear-gradient(150deg,var(--b-soft),var(--card)); border:1px solid #235049;
+    border-radius:var(--r); padding:15px 17px; margin-bottom:20px}
+  .base b{font-size:1.02rem}
+  .base-hood{color:var(--b); font-size:.84rem; margin-inline-start:8px; font-weight:700}
+  .base p{margin:7px 0 11px; font-size:.88rem; color:var(--ink-2)}
+  .nyc-list{list-style:none; margin:0; padding:0; display:grid; gap:11px}
+  .nyc-list li{padding-inline-start:0}
+  .nyc-list b{display:block; font-size:.93rem; margin-bottom:2px}
+  .nyc-list span{font-size:.86rem; color:var(--ink-2)}
+
   /* places */
   .daygroup{display:flex; align-items:baseline; gap:10px; margin:26px 2px 12px; padding-bottom:8px;
     border-bottom:1px solid var(--line)}
@@ -271,6 +315,8 @@
   <nav aria-label="ניווט ראשי">
     <button class="mitem" data-view="itinerary"><span class="ic">🗺️</span> המסלול</button>
     <button class="mitem" data-view="tasks"><span class="ic">📝</span> משימות פתוחות <span class="ct" id="ctTasks">–</span></button>
+    <button class="mitem" data-view="nyc"><span class="ic">🗽</span> ניו יורק</button>
+    <button class="mitem" data-view="flights"><span class="ic">✈️</span> טיסות <span class="ct" id="ctFlights">–</span></button>
     <button class="mitem" data-view="places"><span class="ic">📖</span> רקע על האתרים <span class="ct" id="ctPlaces">–</span></button>
     <button class="mitem" data-view="clothing"><span class="ic">🎒</span> מה ללבוש</button>
     <button class="mitem" data-view="packing"><span class="ic">🧳</span> ציוד לארוז <span class="ct" id="ctPack">–</span></button>
@@ -304,7 +350,8 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const view = $("#view"), tabs = $("#daytabs"), pager = $("#pager"), daysNav = $("#daysNav");
 
-let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, PLACES = null, WX = null;
+let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, PLACES = null;
+let NYC = null, FLIGHTS = null, WX = null;
 let cur = 0, currentView = "itinerary";
 
 /* ---------------- drawer ---------------- */
@@ -551,6 +598,105 @@ function renderClothing(){
   return html;
 }
 
+function renderFlights(){
+  if (!FLIGHTS) return `<p class="empty">לא נטענו פרטי טיסות.</p>`;
+  const uLabel = { urgent: ["חובה", "t-urgent"], soon: ["לפני הטיסה", "t-soon"], optional: ["כדאי", "t-optional"] };
+
+  let html = `<div class="page-h"><h2>✈️ פרטי הטיסות</h2><p>${esc(FLIGHTS.note)}</p></div>`;
+  if (FLIGHTS.warn) html += `<div class="banner">⚠️ ${esc(FLIGHTS.warn)}</div>`;
+
+  FLIGHTS.legs.forEach(leg => {
+    html += `<div class="daygroup"><span class="dg-date">${esc(leg.leg)}</span></div>`;
+    leg.items.forEach(it => {
+      if (it.type === "layover"){
+        html += `<div class="layover"><div class="lay-h">🕐 המתנה ב‑<bdi>${esc(it.at)}</bdi> · <b><bdi>${esc(it.dur)}</bdi></b></div>
+          <p>${esc(it.d)}</p>${it.warn ? `<div class="lay-warn">${esc(it.warn)}</div>` : ""}</div>`;
+        return;
+      }
+      html += `<article class="flight">
+        <div class="fl-top">
+          <span class="fl-no">${esc(it.flight)}</span>
+          <span class="fl-air">${esc(it.airline)}${it.operated !== it.airline
+            ? ` · <span class="fl-op">מופעלת על ידי ${esc(it.operated)}</span>` : ""}</span>
+          <span class="fl-date">${esc(it.dow)} · ${esc(it.date.split("-").reverse().slice(0, 2).join("/"))}</span>
+        </div>
+        <div class="fl-route">
+          <div class="fl-end">
+            <div class="fl-code">${esc(it.from.code)}</div>
+            <div class="fl-time">${esc(it.from.time)}</div>
+            <div class="fl-meta">${esc(it.from.name)}<br>טרמינל ${esc(it.from.terminal)}</div>
+          </div>
+          <div class="fl-mid"><span class="fl-dur">${esc(it.duration)}</span><span class="fl-line"></span></div>
+          <div class="fl-end">
+            <div class="fl-code">${esc(it.to.code)}</div>
+            <div class="fl-time">${esc(it.to.time)}</div>
+            <div class="fl-meta">${esc(it.to.name)}<br>טרמינל ${esc(it.to.terminal)}</div>
+          </div>
+        </div>
+        <div class="fl-rows">
+          <span><b>מחלקה</b> ${esc(it.cls)}</span>
+          <span><b>כבודה</b> ${esc(it.bags)}</span>
+          <span><b>מושבים</b> ${esc(it.seats)}</span>
+        </div>
+        ${it.notes && it.notes.length
+          ? `<ul class="hl">${it.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}
+      </article>`;
+    });
+  });
+
+  ["urgent", "soon", "optional"].forEach(u => {
+    const rows = FLIGHTS.checks.filter(c => c.urgency === u);
+    if (!rows.length) return;
+    html += `<div class="sec"><h3>${esc(uLabel[u][0])} <span class="tag ${uLabel[u][1]}">${rows.length}</span></h3>`;
+    rows.forEach(c => {
+      html += `<div class="exp"><div class="m"><b>${c.icon} ${esc(c.t)}</b>
+        <span class="note">${esc(c.d)}</span></div></div>`;
+    });
+    html += `</div>`;
+  });
+  return html;
+}
+
+function renderNyc(){
+  if (!NYC) return `<p class="empty">לא נטען מידע על ניו יורק.</p>`;
+
+  let html = `<div class="page-h"><h2>🗽 ניו יורק</h2><p>${esc(NYC.intro)}</p></div>`;
+
+  html += `<div class="base"><b>🏠 <bdi>${esc(NYC.base.addr)}</bdi></b>
+    <span class="base-hood"><bdi>${esc(NYC.base.hood)}</bdi></span>
+    <p>${esc(NYC.base.d)}</p>
+    <div class="chips">${NYC.base.subway.map(s =>
+      `<span class="chip">🚇 <bdi>${esc(s)}</bdi></span>`).join("")}</div></div>`;
+
+  NYC.days.forEach(d => {
+    html += `<div class="daygroup"><span class="dg-date">${d.icon} ${esc(d.date)} · ${esc(d.dow)}</span>
+      <span class="dg-title">${esc(d.title)}</span></div>
+      <article class="place">
+        <div class="pl-tags"><span class="ptag">${esc(d.area)}</span></div>
+        <p class="pl-story">${esc(d.sum)}</p>
+        <ul class="nyc-list">${d.items.map(i =>
+          `<li><b>${esc(i.n)}</b><span>${esc(i.d)}</span></li>`).join("")}</ul>
+        ${d.tip ? `<div class="pl-know"><b>טיפ:</b> ${esc(d.tip)}</div>` : ""}
+        ${d.note ? `<div class="lay-warn">${esc(d.note)}</div>` : ""}
+      </article>`;
+  });
+
+  html += `<div class="sec"><h3>💡 כדאי לדעת <span class="tag t-optional">${NYC.tips.length}</span></h3>`;
+  NYC.tips.forEach(t => {
+    html += `<div class="exp"><div class="m"><b>${t.icon} ${esc(t.t)}</b>
+      <span class="note">${esc(t.d)}</span></div></div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="sec"><h3>➕ אם יישאר זמן <span class="tag t-optional">${NYC.extras.length}</span></h3>`;
+  NYC.extras.forEach(e => {
+    html += `<div class="exp"><div class="m"><b>${esc(e.n)}</b>
+      <span class="note">${esc(e.d)}</span></div></div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
 function renderPlaces(){
   if (!PLACES) return `<p class="empty">לא נטען מידע על האתרים.</p>`;
 
@@ -685,6 +831,8 @@ function show(name){
   pager.hidden = !isItin;
   if (isItin) selectDay(cur);
   else view.innerHTML = name === "tasks" ? renderTasks()
+                      : name === "nyc" ? renderNyc()
+                      : name === "flights" ? renderFlights()
                       : name === "places" ? renderPlaces()
                       : name === "clothing" ? renderClothing()
                       : name === "packing" ? renderPacking()
@@ -717,14 +865,16 @@ view.addEventListener("change", e => {
 async function boot(){
   let loadErr = null;
   try {
-    const [d, t, e, p, pl] = await Promise.all([
+    const [d, t, e, p, pl, ny, fl] = await Promise.all([
       fetch("data/days.json").then(r => r.json()),
       fetch("data/tasks.json").then(r => r.json()).catch(() => null),
       fetch("data/expenses.json").then(r => r.json()).catch(() => null),
       fetch("data/packing.json").then(r => r.json()).catch(() => null),
-      fetch("data/places.json").then(r => r.json()).catch(() => null)
+      fetch("data/places.json").then(r => r.json()).catch(() => null),
+      fetch("data/nyc.json").then(r => r.json()).catch(() => null),
+      fetch("data/flights.json").then(r => r.json()).catch(() => null)
     ]);
-    DATA = d; TASKS = t; EXPENSES = e; PACKING = p; PLACES = pl;
+    DATA = d; TASKS = t; EXPENSES = e; PACKING = p; PLACES = pl; NYC = ny; FLIGHTS = fl;
   } catch (err) {
     view.innerHTML = `<p class="empty">לא הצלחתי לטעון את נתוני הטיול.<br>${esc(err.message)}</p>`;
     return;
@@ -738,6 +888,8 @@ async function boot(){
   $("#ctPack").textContent = PACKING
     ? PACKING.sections.reduce((a, s) => a + s.items.length, 0) : "–";
   $("#ctPlaces").textContent = PLACES ? PLACES.places.length : "–";
+  $("#ctFlights").textContent = FLIGHTS
+    ? FLIGHTS.legs.reduce((a, l) => a + l.items.filter(i => i.type === "flight").length, 0) : "–";
   $("#foot").textContent = "זמני נהיגה ומרחקים הם הערכות — לאשר שעות פתיחה, הזמנות והיתרים סמוך לתאריך. " +
     "מפות מוטמעות מ‑Google Maps, תחזית מ‑Open‑Meteo.";
 

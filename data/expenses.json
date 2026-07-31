@@ -14,7 +14,7 @@
       "cat": "flights", "label": "El Al — הנפקה מחדש של הכרטיסים",
       "amount": 150, "currency": "USD", "booked": "2026-06-26", "status": "paid",
       "uncertain": true,
-      "note": "אישור נוסף מ‑26/6 עם Grand Total של $150. ייתכן שזו תוספת גבייה ולא כרטיס חדש."
+      "note": "האישור מ‑26/6 הנפיק מחדש את הכרטיסים אחרי שהקטע השני שונה מ‑JFK→לאס וגאס ל‑JFK→SFO. סביר שזו עמלת השינוי ולא כרטיס נוסף."
     },
     {
       "cat": "flights", "label": "American AA566 · Phoenix → JFK, 2 נוסעים",
