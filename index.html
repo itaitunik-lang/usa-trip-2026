@@ -315,7 +315,6 @@
   <nav aria-label="ניווט ראשי">
     <button class="mitem" data-view="itinerary"><span class="ic">🗺️</span> המסלול</button>
     <button class="mitem" data-view="tasks"><span class="ic">📝</span> משימות פתוחות <span class="ct" id="ctTasks">–</span></button>
-    <button class="mitem" data-view="nyc"><span class="ic">🗽</span> ניו יורק</button>
     <button class="mitem" data-view="flights"><span class="ic">✈️</span> טיסות <span class="ct" id="ctFlights">–</span></button>
     <button class="mitem" data-view="places"><span class="ic">📖</span> רקע על האתרים <span class="ct" id="ctPlaces">–</span></button>
     <button class="mitem" data-view="clothing"><span class="ic">🎒</span> מה ללבוש</button>
@@ -351,7 +350,7 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
 const view = $("#view"), tabs = $("#daytabs"), pager = $("#pager"), daysNav = $("#daysNav");
 
 let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, PLACES = null;
-let NYC = null, FLIGHTS = null, WX = null;
+let FLIGHTS = null, WX = null;
 let cur = 0, currentView = "itinerary";
 
 /* ---------------- drawer ---------------- */
@@ -476,6 +475,11 @@ function clothingFor(day){
     case "travel":
       key.push("🧥 שכבה לטיסה — קר במטוס");
       items.push("👟 נעליים נוחות", "🎧 אוזניות", "💊 תיק קטן עם המוצרים החיוניים");
+      break;
+    case "city-walk":
+      key.push("👟 נעליים נוחות מאוד — הרבה קילומטרים על אספלט");
+      items.push("🧥 שכבה דקה — המיזוג בפנים אגרסיבי", "🎒 תיק קטן ולא תיק גב",
+                 "💳 כרטיס אשראי אחד קבוע ל‑OMNY", "🧴 דאודורנט — אוגוסט בעיר לח מאוד");
       break;
   }
   if (w.rain != null && w.rain >= 30) items.push("🌧️ מעיל גשם קל — " + w.rain + "% סיכוי למשקעים");
@@ -657,46 +661,6 @@ function renderFlights(){
   return html;
 }
 
-function renderNyc(){
-  if (!NYC) return `<p class="empty">לא נטען מידע על ניו יורק.</p>`;
-
-  let html = `<div class="page-h"><h2>🗽 ניו יורק</h2><p>${esc(NYC.intro)}</p></div>`;
-
-  html += `<div class="base"><b>🏠 <bdi>${esc(NYC.base.addr)}</bdi></b>
-    <span class="base-hood"><bdi>${esc(NYC.base.hood)}</bdi></span>
-    <p>${esc(NYC.base.d)}</p>
-    <div class="chips">${NYC.base.subway.map(s =>
-      `<span class="chip">🚇 <bdi>${esc(s)}</bdi></span>`).join("")}</div></div>`;
-
-  NYC.days.forEach(d => {
-    html += `<div class="daygroup"><span class="dg-date">${d.icon} ${esc(d.date)} · ${esc(d.dow)}</span>
-      <span class="dg-title">${esc(d.title)}</span></div>
-      <article class="place">
-        <div class="pl-tags"><span class="ptag">${esc(d.area)}</span></div>
-        <p class="pl-story">${esc(d.sum)}</p>
-        <ul class="nyc-list">${d.items.map(i =>
-          `<li><b>${esc(i.n)}</b><span>${esc(i.d)}</span></li>`).join("")}</ul>
-        ${d.tip ? `<div class="pl-know"><b>טיפ:</b> ${esc(d.tip)}</div>` : ""}
-        ${d.note ? `<div class="lay-warn">${esc(d.note)}</div>` : ""}
-      </article>`;
-  });
-
-  html += `<div class="sec"><h3>💡 כדאי לדעת <span class="tag t-optional">${NYC.tips.length}</span></h3>`;
-  NYC.tips.forEach(t => {
-    html += `<div class="exp"><div class="m"><b>${t.icon} ${esc(t.t)}</b>
-      <span class="note">${esc(t.d)}</span></div></div>`;
-  });
-  html += `</div>`;
-
-  html += `<div class="sec"><h3>➕ אם יישאר זמן <span class="tag t-optional">${NYC.extras.length}</span></h3>`;
-  NYC.extras.forEach(e => {
-    html += `<div class="exp"><div class="m"><b>${esc(e.n)}</b>
-      <span class="note">${esc(e.d)}</span></div></div>`;
-  });
-  html += `</div>`;
-  return html;
-}
-
 function renderPlaces(){
   if (!PLACES) return `<p class="empty">לא נטען מידע על האתרים.</p>`;
 
@@ -780,11 +744,15 @@ function renderExpenses(){
 
   let html = `<div class="page-h"><h2>💳 הוצאות הטיול</h2>
     <p>${esc(EXPENSES.source)} · עודכן ${esc(EXPENSES.updated)}</p></div>`;
+  if (EXPENSES.note) html += `<div class="banner">ℹ️ ${esc(EXPENSES.note)}</div>`;
 
+  /* the "needs checking" tiles only earn their space when something is flagged */
   html += `<div class="totals">
-    <div class="tot main"><div class="k">סה״כ מאומת</div><div class="v">${money(sure, "USD")}</div></div>
-    <div class="tot"><div class="k">כולל פריטים לאימות</div><div class="v">${money(sure + flagged, "USD")}</div></div>
-    <div class="tot"><div class="k">חסרי סכום</div><div class="v">${unknown}</div></div>
+    <div class="tot main"><div class="k">סה״כ עד כה</div><div class="v">${money(sure, "USD")}</div></div>
+    ${flagged ? `<div class="tot"><div class="k">כולל פריטים לאימות</div>
+      <div class="v">${money(sure + flagged, "USD")}</div></div>` : ""}
+    ${unknown ? `<div class="tot"><div class="k">חסרי סכום</div><div class="v">${unknown}</div></div>` : ""}
+    <div class="tot"><div class="k">פריטים</div><div class="v">${EXPENSES.items.length}</div></div>
   </div>`;
 
   Object.keys(CATS).forEach(cat => {
@@ -831,7 +799,6 @@ function show(name){
   pager.hidden = !isItin;
   if (isItin) selectDay(cur);
   else view.innerHTML = name === "tasks" ? renderTasks()
-                      : name === "nyc" ? renderNyc()
                       : name === "flights" ? renderFlights()
                       : name === "places" ? renderPlaces()
                       : name === "clothing" ? renderClothing()
@@ -865,16 +832,15 @@ view.addEventListener("change", e => {
 async function boot(){
   let loadErr = null;
   try {
-    const [d, t, e, p, pl, ny, fl] = await Promise.all([
+    const [d, t, e, p, pl, fl] = await Promise.all([
       fetch("data/days.json").then(r => r.json()),
       fetch("data/tasks.json").then(r => r.json()).catch(() => null),
       fetch("data/expenses.json").then(r => r.json()).catch(() => null),
       fetch("data/packing.json").then(r => r.json()).catch(() => null),
       fetch("data/places.json").then(r => r.json()).catch(() => null),
-      fetch("data/nyc.json").then(r => r.json()).catch(() => null),
       fetch("data/flights.json").then(r => r.json()).catch(() => null)
     ]);
-    DATA = d; TASKS = t; EXPENSES = e; PACKING = p; PLACES = pl; NYC = ny; FLIGHTS = fl;
+    DATA = d; TASKS = t; EXPENSES = e; PACKING = p; PLACES = pl; FLIGHTS = fl;
   } catch (err) {
     view.innerHTML = `<p class="empty">לא הצלחתי לטעון את נתוני הטיול.<br>${esc(err.message)}</p>`;
     return;

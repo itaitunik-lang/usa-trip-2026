@@ -1,7 +1,21 @@
 {
-  "updated": "2026-07-30",
+  "updated": "2026-07-31",
   "note": "מתעדכן מהתיקייה ב‑Cowork ומהמיילים בתווית USA TRIP.",
   "open": [
+    {
+      "id": "travel-insurance",
+      "title": "ביטוח נסיעות לחו\"ל",
+      "cat": "🛡️ ביטוח",
+      "urgency": "urgent",
+      "note": "עדיין לא נעשה, והטיסה בעוד כמה ימים. לוודא שהפוליסה מכסה טיולים ברגל, שחייה ב‑Lake Powell, ונהיגה ברכב שכור. חלק מהמבטחים לא מוכרים פוליסה אחרי היציאה מהארץ."
+    },
+    {
+      "id": "esim-data",
+      "title": "חבילת גלישה לטלפון לשניכם",
+      "cat": "📱 תקשורת",
+      "urgency": "urgent",
+      "note": "עדיין לא נעשה. eSIM אמריקאי נוח יותר מחבילת רוֹמינג — מפעילים לפני הטיסה ומתחבר בנחיתה. שימו לב שאין קליטה בחלקים ממוניומנט ואלי ומהפארקים, אז חבילה לא מייתרת מפות אופליין."
+    },
     {
       "id": "hotel-mammoth",
       "title": "לינה ל‑7 באוגוסט — Mammoth Lakes",
@@ -46,17 +60,53 @@
     }
   ],
   "done": [
-    { "title": "רכב שכור SFO → Phoenix (אופרן)", "note": "הוזמן 11/7" },
-    { "title": "8 באוג' — The LINQ, לאס וגאס", "note": "הוזמן 4/7 דרך Agoda" },
-    { "title": "9 באוג' — Cable Mountain Lodge, Springdale", "note": "הוזמן 18/7 — צמוד לשאטל של Zion" },
-    { "title": "11 באוג' — The Wesley Boutique Hotel, Page", "note": "הוזמן 17/7" },
-    { "title": "13–15 באוג' — Amara Resort & Spa, סדונה", "note": "הוזמן 20/7, 2 לילות" },
-    { "title": "Ruby's Inn הוזז ל‑10→11 באוג'", "note": "עודכן 27/6" },
-    { "title": "Lower Antelope Canyon → 14:15 (11 באוג')", "note": "הוזז לאחה\"צ, הסיור של 9:15 בוטל" },
-    { "title": "טיסות El Al ו‑AA566 PHX→JFK", "note": "כרטיסים הונפקו" },
-    { "title": "5 באוג' — Hotel Aluxor SFO", "note": "כולל שאטל מהטרמינל" },
-    { "title": "6 באוג' — Yosemite Valley Lodge + Mountain Room 20:30", "note": "לינה וארוחה מוזמנות" },
-    { "title": "12 באוג' — Hampton Inn Kayenta", "note": "כולל ארוחת בוקר" },
-    { "title": "15 באוג' — Arlo SoHo, ניו יורק", "note": "16–20/8 בדירת חבר, חזרה 20/8" }
+    {
+      "title": "רכב שכור SFO → Phoenix (אופרן)",
+      "note": "הוזמן 11/7"
+    },
+    {
+      "title": "8 באוג' — The LINQ, לאס וגאס",
+      "note": "הוזמן 4/7 דרך Agoda"
+    },
+    {
+      "title": "9 באוג' — Cable Mountain Lodge, Springdale",
+      "note": "הוזמן 18/7 — צמוד לשאטל של Zion"
+    },
+    {
+      "title": "11 באוג' — The Wesley Boutique Hotel, Page",
+      "note": "הוזמן 17/7"
+    },
+    {
+      "title": "13–15 באוג' — Amara Resort & Spa, סדונה",
+      "note": "הוזמן 20/7, 2 לילות"
+    },
+    {
+      "title": "Ruby's Inn הוזז ל‑10→11 באוג'",
+      "note": "עודכן 27/6"
+    },
+    {
+      "title": "Lower Antelope Canyon → 14:15 (11 באוג')",
+      "note": "הוזז לאחה\"צ, הסיור של 9:15 בוטל"
+    },
+    {
+      "title": "טיסות El Al ו‑AA566 PHX→JFK",
+      "note": "כרטיסים הונפקו"
+    },
+    {
+      "title": "5 באוג' — Hotel Aluxor SFO",
+      "note": "כולל שאטל מהטרמינל"
+    },
+    {
+      "title": "6 באוג' — Yosemite Valley Lodge + Mountain Room 20:30",
+      "note": "לינה וארוחה מוזמנות"
+    },
+    {
+      "title": "12 באוג' — Hampton Inn Kayenta",
+      "note": "כולל ארוחת בוקר"
+    },
+    {
+      "title": "15 באוג' — Arlo SoHo, ניו יורק",
+      "note": "16–20/8 בדירת חבר, חזרה 20/8"
+    }
   ]
 }

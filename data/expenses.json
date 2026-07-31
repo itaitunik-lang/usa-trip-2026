@@ -1,87 +1,174 @@
 {
-  "updated": "2026-07-30",
+  "updated": "2026-07-31",
   "source": "נבנה מהקבלות בתווית USA TRIP ב‑Gmail",
   "baseCurrency": "USD",
-  "rates": { "USD": 1, "ILS": 0.27 },
+  "rates": {
+    "USD": 1,
+    "ILS": 0.27
+  },
   "items": [
     {
-      "cat": "flights", "label": "El Al — כרטיסי טיסה, 2 נוסעים",
-      "amount": 2623.6, "currency": "USD", "booked": "2026-05-25", "status": "paid",
-      "uncertain": true,
-      "note": "האישור מציג Grand Total של $2,623.60. לא ברור מהמייל אם זה לכרטיס בודד או לשני הנוסעים — לאמת מול חיוב האשראי."
+      "cat": "flights",
+      "label": "El Al — כרטיסי טיסה · 2 נוסעים",
+      "amount": 5247.2,
+      "currency": "USD",
+      "booked": "2026-05-25",
+      "status": "paid",
+      "uncertain": false,
+      "note": "‎$2,623.60 לנוסע × 2. כולל TLV→JFK→SFO בהלוך ו‑JFK→TLV בפרימיום בחזור."
     },
     {
-      "cat": "flights", "label": "El Al — הנפקה מחדש של הכרטיסים",
-      "amount": 150, "currency": "USD", "booked": "2026-06-26", "status": "paid",
-      "uncertain": true,
-      "note": "האישור מ‑26/6 הנפיק מחדש את הכרטיסים אחרי שהקטע השני שונה מ‑JFK→לאס וגאס ל‑JFK→SFO. סביר שזו עמלת השינוי ולא כרטיס נוסף."
+      "cat": "flights",
+      "label": "El Al — שינוי יעד ל‑SFO · 2 נוסעים",
+      "amount": 300,
+      "currency": "USD",
+      "booked": "2026-06-26",
+      "status": "paid",
+      "uncertain": false,
+      "note": "‎$150 לנוסע × 2. הקטע השני שונה מ‑JFK→לאס וגאס ל‑JFK→SFO."
     },
     {
-      "cat": "flights", "label": "American AA566 · Phoenix → JFK, 2 נוסעים",
-      "amount": 546.8, "currency": "USD", "booked": "2026-06-26", "status": "paid",
+      "cat": "flights",
+      "label": "American AA566 · Phoenix → JFK, 2 נוסעים",
+      "amount": 546.8,
+      "currency": "USD",
+      "booked": "2026-06-26",
+      "status": "paid",
       "note": "כולל מיסים ואגרות. כבודה ראשונה $55 ושנייה $65 — לא כלול."
     },
     {
-      "cat": "car", "label": "אופרן — רכב שכור SFO → Phoenix",
-      "amount": 533.31, "currency": "USD", "booked": "2026-07-11", "status": "paid",
+      "cat": "car",
+      "label": "אופרן — רכב שכור SFO → Phoenix",
+      "amount": 533.31,
+      "currency": "USD",
+      "booked": "2026-07-11",
+      "status": "paid",
       "note": "מחיר שכירות $550.89 בתוספת אופרן פלוס ועמלות, בניכוי הנחה של $49.58. ק\"מ ללא הגבלה, השתתפות עצמית $0. תוספת נהג צעיר $25 ליום נגבית במקום אם רלוונטי."
     },
     {
-      "cat": "hotels", "label": "5 באוג' · Hotel Aluxor SFO",
-      "amount": 127.23, "currency": "USD", "booked": "2026-07-02", "status": "at-property",
+      "cat": "hotels",
+      "label": "5 באוג' · Hotel Aluxor SFO",
+      "amount": 127.23,
+      "currency": "USD",
+      "booked": "2026-07-02",
+      "status": "at-property",
       "note": "תשלום במקום האירוח."
     },
     {
-      "cat": "hotels", "label": "6 באוג' · Yosemite Valley Lodge",
-      "amount": 555.93, "currency": "USD", "booked": "2026-06-27", "status": "paid"
+      "cat": "hotels",
+      "label": "6 באוג' · Yosemite Valley Lodge",
+      "amount": 555.93,
+      "currency": "USD",
+      "booked": "2026-06-27",
+      "status": "paid",
+      "note": "מחיר לחדר."
     },
     {
-      "cat": "hotels", "label": "8 באוג' · The LINQ, לאס וגאס",
-      "amount": 143.59, "currency": "USD", "booked": "2026-07-04", "status": "scheduled",
+      "cat": "hotels",
+      "label": "8 באוג' · The LINQ, לאס וגאס",
+      "amount": 143.59,
+      "currency": "USD",
+      "booked": "2026-07-04",
+      "status": "scheduled",
       "note": "חיוב אוטומטי ב‑4 באוגוסט. בנוסף עמלת אתר נופש של $56.63 שנגבית במלון."
     },
     {
-      "cat": "hotels", "label": "9 באוג' · Cable Mountain Lodge, Springdale",
-      "amount": 816.87, "currency": "ILS", "booked": "2026-07-18", "status": "paid",
+      "cat": "hotels",
+      "label": "9 באוג' · Cable Mountain Lodge, Springdale",
+      "amount": 816.87,
+      "currency": "ILS",
+      "booked": "2026-07-18",
+      "status": "paid",
       "note": "דירת סטודיו קינג, צמוד לשאטל של Zion."
     },
     {
-      "cat": "hotels", "label": "10 באוג' · Best Western Ruby's Inn, Bryce",
-      "amount": 218.67, "currency": "USD", "booked": "2026-06-20", "status": "at-property",
+      "cat": "hotels",
+      "label": "10 באוג' · Best Western Ruby's Inn, Bryce",
+      "amount": 218.67,
+      "currency": "USD",
+      "booked": "2026-06-20",
+      "status": "at-property",
       "note": "כולל מס 15.12% ודמי אתר נופש של $5 ללילה."
     },
     {
-      "cat": "hotels", "label": "11 באוג' · The Wesley Boutique Hotel, Page",
-      "amount": 136.13, "currency": "USD", "booked": "2026-07-17", "status": "at-property"
+      "cat": "hotels",
+      "label": "11 באוג' · The Wesley Boutique Hotel, Page",
+      "amount": 136.13,
+      "currency": "USD",
+      "booked": "2026-07-17",
+      "status": "at-property",
+      "note": "מחיר לחדר."
     },
     {
-      "cat": "hotels", "label": "12 באוג' · Hampton Inn Kayenta",
-      "amount": 416.3, "currency": "USD", "booked": "2026-07-02", "status": "at-property",
+      "cat": "hotels",
+      "label": "12 באוג' · Hampton Inn Kayenta",
+      "amount": 416.3,
+      "currency": "USD",
+      "booked": "2026-07-02",
+      "status": "at-property",
       "note": "ארוחת בוקר כלולה."
     },
     {
-      "cat": "hotels", "label": "13–15 באוג' · Amara Resort & Spa, סדונה",
-      "amount": 621.07, "currency": "USD", "booked": "2026-07-20", "status": "scheduled",
+      "cat": "hotels",
+      "label": "13–15 באוג' · Amara Resort & Spa, סדונה",
+      "amount": 621.07,
+      "currency": "USD",
+      "booked": "2026-07-20",
+      "status": "scheduled",
       "note": "2 לילות. חיוב אוטומטי ב‑1 באוגוסט."
     },
     {
-      "cat": "hotels", "label": "15 באוג' · Arlo SoHo, ניו יורק",
-      "amount": 282.48, "currency": "USD", "booked": "2026-07-02", "status": "at-property"
+      "cat": "hotels",
+      "label": "15 באוג' · Arlo SoHo, ניו יורק",
+      "amount": 282.48,
+      "currency": "USD",
+      "booked": "2026-07-02",
+      "status": "at-property",
+      "note": "מחיר לחדר."
     },
     {
-      "cat": "tours", "label": "Lower Antelope Canyon · סיור מודרך",
-      "amount": null, "currency": "USD", "booked": "2026-07-04", "status": "booked",
-      "note": "אישור ההזמנה לא כולל סכום — לבדוק בחיוב האשראי."
+      "cat": "tours",
+      "label": "Lower Antelope Canyon · סיור מודרך",
+      "amount": 146.6,
+      "currency": "USD",
+      "booked": "2026-07-04",
+      "status": "paid",
+      "note": "לשני מבוגרים. הסכום לפי הזיכוי המלא שהתקבל על הסיור של 9:15 שבוטל, לפני ההזמנה מחדש ל‑14:15."
     }
   ],
   "deposits": [
-    { "label": "The Wesley, Page — פיקדון נזקים", "amount": 200, "currency": "USD", "note": "במזומן בצ'ק‑אין, מוחזר" },
-    { "label": "Hotel Aluxor SFO — פיקדון", "amount": 150, "currency": "USD", "note": "על כרטיס אשראי, מוחזר" },
-    { "label": "Arlo SoHo — פיקדון", "amount": 100, "currency": "USD", "note": "על כרטיס אשראי, מוחזר" }
+    {
+      "label": "The Wesley, Page — פיקדון נזקים",
+      "amount": 200,
+      "currency": "USD",
+      "note": "במזומן בצ'ק‑אין, מוחזר"
+    },
+    {
+      "label": "Hotel Aluxor SFO — פיקדון",
+      "amount": 150,
+      "currency": "USD",
+      "note": "על כרטיס אשראי, מוחזר"
+    },
+    {
+      "label": "Arlo SoHo — פיקדון",
+      "amount": 100,
+      "currency": "USD",
+      "note": "על כרטיס אשראי, מוחזר"
+    }
   ],
   "missing": [
-    { "label": "7 באוג' · לינה ב‑Mammoth Lakes", "note": "עדיין לא הוזמן" },
-    { "label": "כרטיס America the Beautiful", "note": "$80 — עדיין לא נרכש" },
-    { "label": "כניסה ל‑Monument Valley", "note": "תשלום נפרד בשער" }
-  ]
+    {
+      "label": "7 באוג' · לינה ב‑Mammoth Lakes",
+      "note": "עדיין לא הוזמן"
+    },
+    {
+      "label": "כרטיס America the Beautiful",
+      "note": "$80 — עדיין לא נרכש"
+    },
+    {
+      "label": "כניסה ל‑Monument Valley",
+      "note": "תשלום נפרד בשער"
+    }
+  ],
+  "note": "מחירי הלינה הם לחדר (שניכם יחד). מחירי הטיסות מוכפלים ב‑2 נוסעים."
 }
