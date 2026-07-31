@@ -186,6 +186,21 @@
     border-radius:999px; padding:5px 12px; color:var(--ink-2)}
   .chip.key{background:var(--a-soft); border-color:#5c2c1a; color:#ff9066; font-weight:700}
 
+  /* packing */
+  .progress{display:flex; align-items:center; gap:12px; margin-bottom:16px}
+  .pbar{flex:1; height:9px; background:var(--card-2); border:1px solid var(--line-2);
+    border-radius:999px; overflow:hidden}
+  .pbar span{display:block; height:100%; background:linear-gradient(90deg,var(--a),var(--gold));
+    transition:width .25s}
+  .pnum{font-weight:800; font-size:.86rem; color:var(--muted); white-space:nowrap}
+  .plan{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:11px; margin-bottom:18px}
+  .pcard{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px 15px}
+  .pcard b{display:block; font-size:.92rem; margin-bottom:3px}
+  .pcard span{color:var(--ink-2); font-size:.83rem}
+  .secnote{font-weight:400; font-size:.79rem; color:var(--muted)}
+  .qty{color:var(--a); font-weight:800}
+  .t-done{background:var(--ok-soft); color:var(--ok); border:1px solid #265c40}
+
   /* expenses */
   .totals{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:11px; margin-bottom:18px}
   .tot{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
@@ -234,6 +249,7 @@
     <button class="mitem" data-view="itinerary"><span class="ic">🗺️</span> המסלול</button>
     <button class="mitem" data-view="tasks"><span class="ic">📝</span> משימות פתוחות <span class="ct" id="ctTasks">–</span></button>
     <button class="mitem" data-view="clothing"><span class="ic">🎒</span> מה ללבוש</button>
+    <button class="mitem" data-view="packing"><span class="ic">🧳</span> ציוד לארוז <span class="ct" id="ctPack">–</span></button>
     <button class="mitem" data-view="expenses"><span class="ic">💳</span> הוצאות <span class="ct" id="ctExp">–</span></button>
   </nav>
   <div class="drawer-f" id="drawerFoot">טוען נתונים…</div>
@@ -264,7 +280,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const view = $("#view"), tabs = $("#daytabs"), pager = $("#pager"), daysNav = $("#daysNav");
 
-let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, WX = null;
+let DATA = { days: [], trip: {} }, TASKS = null, EXPENSES = null, PACKING = null, WX = null;
 let cur = 0, currentView = "itinerary";
 
 /* ---------------- drawer ---------------- */
@@ -511,6 +527,45 @@ function renderClothing(){
   return html;
 }
 
+function renderPacking(){
+  if (!PACKING) return `<p class="empty">לא נטענה רשימת הציוד.</p>`;
+  const saved = JSON.parse(localStorage.getItem("tripPacking") || "{}");
+  const total = PACKING.sections.reduce((a, s) => a + s.items.length, 0);
+  const packed = PACKING.sections.reduce(
+    (a, s) => a + s.items.filter(i => saved[i.id]).length, 0);
+
+  let html = `<div class="page-h"><h2>🧳 ציוד לארוז</h2><p>${esc(PACKING.intro)}</p></div>`;
+
+  html += `<div class="progress"><div class="pbar"><span style="width:${total ? (packed / total * 100) : 0}%"></span></div>
+    <div class="pnum">${packed} / ${total}</div></div>`;
+
+  html += `<div class="plan">` + PACKING.plan.map(p =>
+    `<div class="pcard"><b>${p.icon} ${esc(p.t)}</b><span>${esc(p.d)}</span></div>`).join("") + `</div>`;
+
+  PACKING.sections.forEach(sec => {
+    const n = sec.items.filter(i => saved[i.id]).length;
+    html += `<div class="sec"><h3>${sec.icon} ${esc(sec.title)}
+      <span class="tag ${n === sec.items.length ? "t-done" : "t-optional"}">${n}/${sec.items.length}</span>
+      <span class="secnote">${esc(sec.note)}</span></h3>`;
+    sec.items.forEach(i => {
+      const on = !!saved[i.id];
+      html += `<label class="task${on ? " checked" : ""}">
+        <input type="checkbox" data-pack="${esc(i.id)}"${on ? " checked" : ""}>
+        <span class="txt"><b>${esc(i.n)}${i.q ? ` <span class="qty">${esc(i.q)}</span>` : ""}</b>
+        ${i.note ? `<span class="note">${esc(i.note)}</span>` : ""}</span></label>`;
+    });
+    html += `</div>`;
+  });
+
+  html += `<div class="sec"><h3>🚫 מה לא להביא <span class="tag t-optional">${PACKING.skip.length}</span></h3>`;
+  PACKING.skip.forEach(s => {
+    html += `<div class="exp"><div class="m"><b>${esc(s.n)}</b>
+      <span class="note">${esc(s.why)}</span></div></div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
 function renderExpenses(){
   if (!EXPENSES) return `<p class="empty">לא נטענו הוצאות.</p>`;
   const CATS = { flights: "✈️ טיסות", car: "🚗 רכב", hotels: "🛏️ לינה", tours: "🎟️ סיורים" };
@@ -577,31 +632,43 @@ function show(name){
   if (isItin) selectDay(cur);
   else view.innerHTML = name === "tasks" ? renderTasks()
                       : name === "clothing" ? renderClothing()
+                      : name === "packing" ? renderPacking()
                       : renderExpenses();
   view.focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-/* task checkboxes persist locally so ticking one survives a refresh */
+/* ticks persist locally so they survive a refresh */
+function persist(key, id, on){
+  const saved = JSON.parse(localStorage.getItem(key) || "{}");
+  saved[id] = on;
+  localStorage.setItem(key, JSON.stringify(saved));
+}
 view.addEventListener("change", e => {
-  const cb = e.target.closest("input[data-task]");
+  const cb = e.target.closest("input[data-task],input[data-pack]");
   if (!cb) return;
-  const saved = JSON.parse(localStorage.getItem("tripTasks") || "{}");
-  saved[cb.dataset.task] = cb.checked;
-  localStorage.setItem("tripTasks", JSON.stringify(saved));
   cb.closest(".task").classList.toggle("checked", cb.checked);
+  if (cb.dataset.task) persist("tripTasks", cb.dataset.task, cb.checked);
+  else {
+    persist("tripPacking", cb.dataset.pack, cb.checked);
+    /* redraw so the progress bar and the per-section counts stay honest */
+    const y = window.scrollY;
+    view.innerHTML = renderPacking();
+    window.scrollTo({ top: y, behavior: "instant" });
+  }
 });
 
 /* ---------------- boot ---------------- */
 async function boot(){
   let loadErr = null;
   try {
-    const [d, t, e] = await Promise.all([
+    const [d, t, e, p] = await Promise.all([
       fetch("data/days.json").then(r => r.json()),
       fetch("data/tasks.json").then(r => r.json()).catch(() => null),
-      fetch("data/expenses.json").then(r => r.json()).catch(() => null)
+      fetch("data/expenses.json").then(r => r.json()).catch(() => null),
+      fetch("data/packing.json").then(r => r.json()).catch(() => null)
     ]);
-    DATA = d; TASKS = t; EXPENSES = e;
+    DATA = d; TASKS = t; EXPENSES = e; PACKING = p;
   } catch (err) {
     view.innerHTML = `<p class="empty">לא הצלחתי לטעון את נתוני הטיול.<br>${esc(err.message)}</p>`;
     return;
@@ -612,6 +679,8 @@ async function boot(){
   $("#tripFacts").innerHTML = DATA.trip.facts.map(f => `<span>${esc(f)}</span>`).join("");
   $("#ctTasks").textContent = TASKS ? TASKS.open.length : "–";
   $("#ctExp").textContent = EXPENSES ? EXPENSES.items.length : "–";
+  $("#ctPack").textContent = PACKING
+    ? PACKING.sections.reduce((a, s) => a + s.items.length, 0) : "–";
   $("#foot").textContent = "זמני נהיגה ומרחקים הם הערכות — לאשר שעות פתיחה, הזמנות והיתרים סמוך לתאריך. " +
     "מפות מוטמעות מ‑Google Maps, תחזית מ‑Open‑Meteo.";
 
