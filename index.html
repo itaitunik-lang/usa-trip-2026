@@ -83,6 +83,8 @@
     justify-content:center; line-height:1.15; font-family:inherit}
   .daytab small{font-weight:400; color:var(--muted); font-size:.7rem}
   .daytab .wx{font-size:.68rem; color:var(--gold); font-weight:700}
+  .daytab .wx.est{color:var(--muted); font-weight:600}
+  .daytab[aria-selected="true"] .wx.est{color:#5c3418}
   .daytab[aria-selected="true"]{background:var(--a); border-color:var(--a); color:#1a0d07}
   .daytab[aria-selected="true"] small,.daytab[aria-selected="true"] .wx{color:#3d1a0b}
   .daytab:focus-visible{outline:3px solid var(--b); outline-offset:2px}
@@ -142,8 +144,13 @@
   .tip{background:var(--gold-soft); border:1px solid #5a4520} .tip b{color:var(--gold)}
 
   .pager{display:flex; justify-content:space-between; gap:10px; margin-top:18px}
+  /* flex order puts each arrow on the button's outer edge: in RTL the first
+     child lands rightmost, so prev leads with its arrow and next trails with one */
   .pager button{flex:1; background:var(--card); border:1.5px solid var(--line-2); border-radius:12px;
-    padding:13px; font-size:.9rem; font-weight:700; cursor:pointer; color:var(--ink); min-height:48px; font-family:inherit}
+    padding:13px; font-size:.9rem; font-weight:700; cursor:pointer; color:var(--ink); min-height:48px;
+    font-family:inherit; display:flex; align-items:center; justify-content:center; gap:9px}
+  .pager .ar{font-size:.8rem; color:var(--a); line-height:1}
+  .pager button:disabled .ar{color:inherit}
   .pager button:hover:not(:disabled){border-color:var(--a); color:var(--a)}
   .pager button:disabled{opacity:.35; cursor:default}
   .pager button:focus-visible{outline:3px solid var(--b); outline-offset:2px}
@@ -337,8 +344,8 @@
 <main>
   <div id="view" tabindex="-1" aria-live="polite"><p class="empty">טוען…</p></div>
   <div class="pager" id="pager" hidden>
-    <button id="prevBtn" type="button">◄ היום הקודם</button>
-    <button id="nextBtn" type="button">היום הבא ►</button>
+    <button id="prevBtn" type="button"><span class="ar" aria-hidden="true">►</span><span>היום הקודם</span></button>
+    <button id="nextBtn" type="button"><span>היום הבא</span><span class="ar" aria-hidden="true">◄</span></button>
   </div>
 </main>
 <footer id="foot"></footer>
@@ -863,7 +870,9 @@ async function boot(){
     const b = document.createElement("button");
     b.className = "daytab"; b.setAttribute("role", "tab"); b.id = "tab-" + idx;
     b.setAttribute("aria-controls", "view");
-    b.innerHTML = esc(day.date.replace(" באוג'", "")) + "<small>" + esc(day.dow) + "</small>";
+    /* seed every tab with the August average; the forecast overwrites what it reaches */
+    b.innerHTML = esc(day.date.replace(" באוג'", "")) + "<small>" + esc(day.dow) + "</small>"
+      + `<span class="wx est">~${day.climate.max}°</span>`;
     b.addEventListener("click", () => selectDay(idx));
     b.addEventListener("keydown", ev => {
       if (ev.key === "ArrowLeft"){ ev.preventDefault(); selectDay(Math.min(cur + 1, DATA.days.length - 1), true); }
@@ -891,9 +900,10 @@ async function boot(){
     DATA.days.forEach((day, i) => {
       const w = WX[day.iso];
       if (!w) return;
-      const tab = document.getElementById("tab-" + i);
-      if (tab && !tab.querySelector(".wx"))
-        tab.insertAdjacentHTML("beforeend", `<span class="wx">${w.max}°</span>`);
+      const el = document.querySelector("#tab-" + i + " .wx");
+      if (!el) return;
+      el.textContent = w.max + "°";
+      el.classList.remove("est");
     });
     if (currentView === "itinerary") renderDay(DATA.days[cur]);
     else if (currentView === "clothing") view.innerHTML = renderClothing();
