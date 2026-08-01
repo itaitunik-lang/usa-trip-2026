@@ -1176,8 +1176,22 @@ boot();
 
 /* Offline support. Registered last so a failure here never blocks the page. */
 if ("serviceWorker" in navigator) {
+  /* An update installs in the background and then claims this page. Without
+     reloading, the tab keeps running the markup it was served with — that is
+     how a stale layout survived a deploy. Reload once when a *new* worker
+     takes over; skip it on the very first visit, when there was no controller
+     to replace. */
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || reloading) return;
+    reloading = true;
+    location.reload();
+  });
   window.addEventListener("load", () =>
-    navigator.serviceWorker.register("sw.js").catch(() => {}));
+    navigator.serviceWorker.register("sw.js")
+      .then(reg => reg.update())
+      .catch(() => {}));
 }
 </script>
 </body>

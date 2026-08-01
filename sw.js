@@ -11,7 +11,7 @@
  *
  * Bump CACHE when the shell changes; old caches are dropped on activate.
  */
-const CACHE = "grand-circle-v3";
+const CACHE = "grand-circle-v4";
 
 const DAY_NUMS = ["05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"];
 
@@ -66,6 +66,27 @@ self.addEventListener("fetch", e => {
   /* Open-Meteo and Google Maps are never cached here — the page keeps its own
      copy of the last forecast in localStorage, and map tiles are not ours. */
   if (url.origin !== self.location.origin) return;
+
+  /* The page itself is network-first. Serving it cache-first meant every
+     deploy stayed invisible until a second reload, and a browser could sit on
+     a stale layout indefinitely — which is exactly what happened with the
+     two-column pager fix. Offline still falls back to the cached copy. */
+  if (req.mode === "navigate") {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          const forReq = res.clone(), forIndex = res.clone();
+          caches.open(CACHE).then(c => {
+            c.put(req, forReq);
+            // GitHub Pages serves the directory URL, so normalise it too
+            c.put("./index.html", forIndex);
+          });
+          return res;
+        })
+        .catch(() => caches.match(req).then(hit => hit || caches.match("./index.html")))
+    );
+    return;
+  }
 
   if (url.pathname.includes("/data/")) {
     e.respondWith(
