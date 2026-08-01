@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>icon source</title>
+<style>
+  /* Rendered headless at 512×512 by tools/make-icons.sh — this is the
+     master the home-screen and dock icons are cut from. Colours match the
+     .logo button in index.html. */
+  html,body{margin:0;padding:0;background:transparent}
+  .tile{
+    width:512px; height:512px;
+    display:grid; place-items:center;
+    background:linear-gradient(145deg,#e8734a,#a8401f);
+  }
+  /* Android maskable icons get cropped to a circle of ~80% — shrinking the
+     glyph keeps it inside that safe zone. */
+  .tile.safe .glyph{font-size:230px}
+  .glyph{
+    font-size:300px; line-height:1;
+    font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+    /* nudge: the emoji's own bounding box sits slightly high */
+    transform:translateY(6px);
+  }
+</style>
+</head>
+<body>
+  <div class="tile" id="tile"><span class="glyph">🏜️</span></div>
+<script>
+  if (location.search.includes("safe")) document.getElementById("tile").classList.add("safe");
+</script>
+</body>
+</html>

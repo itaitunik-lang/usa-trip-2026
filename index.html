@@ -5,7 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#12100f">
 <title>מסלול Yosemite ו‑Grand Circle · אוגוסט 2026</title>
-<meta name="description" content="מסלול טיול מפורט: יוסמיטי, זיון, ברייס, פייג', מוניומנט ואלי, גרנד קניון וסדונה — עם מפות, תחזית מזג אוויר, המלצות לבוש והוצאות.">
+<meta name="description" content="מסלול טיול מפורט: יוסמיטי, זיון, ברייס, פייג', מוניומנט ואלי, גרנד קניון, סדונה וניו יורק — עם מפות, תחזית מזג אוויר, המלצות לבוש והוצאות.">
+
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Grand Circle">
 <style>
   :root{
     --bg:#12100f; --bg-2:#191614; --card:#1d1917; --card-2:#241f1c;
@@ -297,7 +306,10 @@
   .flag{color:var(--warn); font-weight:700}
 
   .empty{color:var(--muted); text-align:center; padding:40px 10px; font-size:.9rem}
-  footer{max-width:980px; margin:0 auto; padding:0 14px 40px; color:var(--muted); font-size:.76rem}
+  /* launched from the home screen there is no browser chrome, so the home
+     indicator would otherwise sit on top of the footer */
+  footer{max-width:980px; margin:0 auto; color:var(--muted); font-size:.76rem;
+    padding:0 14px calc(40px + env(safe-area-inset-bottom,0px))}
   [hidden]{display:none !important}
 
   @media(max-width:560px){

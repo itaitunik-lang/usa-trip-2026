@@ -34,9 +34,19 @@ data/flights.json     קטעי הטיסה ורשימת הבדיקות
 data/places.json      רקע על כל אתר — משויך ליום דרך שדה iso
 data/packing.json     רשימת הציוד — סעיפים, כמויות ומה לא להביא
 data/expenses.json    הוצאות מהקבלות
+manifest.webmanifest  הגדרות התקנה כאפליקציה
+icons/                אייקונים למסך הבית ולדוק
 tools/sync.sh         commit + push לאתר החי
 tools/extract_receipts.py   מחלץ סכומים ממיילים של קבלות
+tools/make-icons.sh   מרנדר מחדש את האייקונים מהלוגו
 ```
+
+### התקנה כאפליקציה
+
+**אייפון** — לפתוח בספארי (לא בכרום), כפתור השיתוף ← **הוספה למסך הבית**.
+**מק** — ספארי, תפריט File ← **Add to Dock**. בכרום: אייקון ההתקנה בשורת הכתובת.
+
+האייקון נוצר מ‑`tools/icon-source.html` בעזרת headless Chrome. אם משנים את הלוגו ב‑`index.html`, לעדכן שם את אותם צבעים ולהריץ `./tools/make-icons.sh`.
 
 **כדי לשנות תוכן — עורכים את קבצי ה‑JSON, לא את `index.html`.**
 
