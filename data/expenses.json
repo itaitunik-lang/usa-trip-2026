@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-31",
+  "updated": "2026-08-02",
   "source": "נבנה מהקבלות בתווית USA TRIP ב‑Gmail",
   "baseCurrency": "USD",
   "rates": {
@@ -62,6 +62,15 @@
       "booked": "2026-06-27",
       "status": "paid",
       "note": "מחיר לחדר."
+    },
+    {
+      "cat": "hotels",
+      "label": "7 באוג' · Empeiria High Sierra Hotel, Mammoth Lakes",
+      "amount": 214.92,
+      "currency": "USD",
+      "booked": "2026-08-01",
+      "status": "scheduled",
+      "note": "לילה אחד, Deluxe King room. Booking.com יחייבו את הכרטיס אוטומטית. אצל בית המלון הסכום הכולל (עם עמלת Booking.com) הוא $230.84. ביטול חינם עד 5 באוג' 23:59."
     },
     {
       "cat": "hotels",
@@ -154,13 +163,15 @@
       "amount": 100,
       "currency": "USD",
       "note": "על כרטיס אשראי, מוחזר"
+    },
+    {
+      "label": "Empeiria High Sierra Hotel — פיקדון נזקים",
+      "amount": 50,
+      "currency": "USD",
+      "note": "בעת ההגעה, מוחזר"
     }
   ],
   "missing": [
-    {
-      "label": "7 באוג' · לינה ב‑Mammoth Lakes",
-      "note": "עדיין לא הוזמן"
-    },
     {
       "label": "כרטיס America the Beautiful",
       "note": "$80 — עדיין לא נרכש"
