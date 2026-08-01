@@ -11,7 +11,9 @@
  *
  * Bump CACHE when the shell changes; old caches are dropped on activate.
  */
-const CACHE = "grand-circle-v1";
+const CACHE = "grand-circle-v3";
+
+const DAY_NUMS = ["05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"];
 
 const SHELL = [
   "./",
@@ -28,8 +30,10 @@ const SHELL = [
   "./data/packing.json",
   "./data/flights.json",
   "./data/emergency.json",
-  ...["05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-      .map(d => `./images/day-2026-08-${d}.svg`)
+  // real day photos (what the page actually renders) ...
+  ...DAY_NUMS.map(d => `./images/day-2026-08-${d}.webp`),
+  // ...and the generated SVGs kept as the fallback if a day has no photo yet
+  ...DAY_NUMS.map(d => `./images/day-2026-08-${d}.svg`)
 ];
 
 self.addEventListener("install", e => {

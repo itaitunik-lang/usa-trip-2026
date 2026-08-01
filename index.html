@@ -130,6 +130,9 @@
   .daytab:focus-visible{outline:3px solid var(--b); outline-offset:2px}
 
   main{max-width:980px; margin:0 auto; padding:16px 14px 44px}
+  /* the desktop day-list sidebar; the >=1024px query below is the only place
+     that turns it back on, so the off state has to live outside any query */
+  #sideDays{display:none}
 
   /* ---------- offline / countdown strips ---------- */
   .strip{display:flex; align-items:center; gap:10px; border-radius:12px; padding:10px 14px;
@@ -141,7 +144,7 @@
   /* ---------- day hero ---------- */
   .hero{position:relative; border-radius:var(--r,16px); overflow:hidden; margin-bottom:14px;
     border:1px solid var(--line); background:var(--card-2)}
-  .hero img{display:block; width:100%; height:170px; object-fit:cover}
+  .hero img{display:block; width:100%; height:200px; object-fit:cover}
   .hero-txt{position:absolute; inset-inline:0; bottom:0; padding:14px 18px;
     background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.25) 60%, transparent)}
   .hero-txt h2{margin:0 0 8px; font-size:1.2rem; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.5)}
@@ -361,17 +364,19 @@
   @media(max-width:560px){
     header.top h1{font-size:1.2rem}
     .top-in{padding-inline-start:104px}
-    .hero img{height:140px}
+    .hero img{height:190px}
   }
   @media(min-width:620px){ .hot ul{grid-template-columns:1fr 1fr} }
+  @media(min-width:768px){ .hero img{height:260px} }
 
   /* iPad and desktop: the single 980px column wastes a wide screen */
   @media(min-width:1024px){
     main{max-width:1180px; display:grid; grid-template-columns:270px 1fr; gap:22px; align-items:start}
     main > *{grid-column:1 / -1}
-    body.split main > #view{grid-column:2; grid-row:1 / span 2}
-    body.split main > #sideDays{grid-column:1; grid-row:1; display:block}
-    body.split main > .pager{grid-column:1; grid-row:2; flex-direction:column}
+    .hero img{height:320px}
+    body.split main > #sideDays{grid-column:1; grid-row:1 / span 2; display:block}
+    body.split main > #view{grid-column:2; grid-row:1}
+    body.split main > .pager{grid-column:2; grid-row:2}
     body.split nav.days{display:none}
     #sideDays{display:none; position:sticky; top:14px}
     .sidelist{list-style:none; margin:0; padding:0; display:grid; gap:5px}
@@ -625,7 +630,7 @@ function heroFor(day){
     ? `<span class="badge ${day.sleep.st === "ok" ? "ok" : "warn"}">🛏️ ${esc(day.sleep.name)} ${day.sleep.st === "ok" ? "✅" : "— לא הוזמן ⚠️"}</span>` : "";
   const drive = day.drive ? `<span class="badge">🚗 ${esc(day.drive)}</span>` : "";
   return `<div class="hero">
-    <img src="${esc(src)}" alt="" loading="lazy" decoding="async">
+    <img src="${esc(src)}" alt="${esc(day.imgAlt || "")}" loading="lazy" decoding="async">
     <div class="hero-txt"><h2>${esc(day.date)} · ${esc(day.title)}</h2>
       <div class="badges">${drive}${sleep}</div></div></div>`;
 }

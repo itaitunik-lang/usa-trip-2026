@@ -54,22 +54,26 @@ icons/                אייקונים למסך הבית ולדוק
 tools/sync.sh              commit + push לאתר החי
 tools/extract_receipts.py  מחלץ סכומים ממיילים של קבלות
 tools/make-icons.sh        מרנדר מחדש את האייקונים מהלוגו
-tools/make_day_art.py      מייצר מחדש את איורי הימים
+tools/make_day_art.py      מייצר מחדש את איורי ה‑SVG (fallback)
+tools/fetch_day_photos.py  מוריד את תמונות הימים מ‑Commons + כותב CREDITS.md
+images/CREDITS.md          מקור, צלם ורישיון לכל תמונה
 ```
 
 **כדי לשנות תוכן — עורכים את קבצי ה‑JSON, לא את `index.html`.**
 
 ### תמונות לימים
 
-לכל יום יש איור וקטורי שנוצר ב‑`tools/make_day_art.py`. הם נבחרו במקום צילומים כי המאגר ציבורי ורישוי תמונות בו הוא בעיה.
+לכל יום יש עכשיו תמונה אמיתית מהמקום, ב‑`images/day-<iso>.webp` (~130KB כל אחת, ~2MB הכול). הן הורדו מ‑Wikimedia Commons תחת רישיונות פתוחים בלבד (CC0, Public Domain, CC BY/BY‑SA) — הקרדיטים המלאים בקובץ [`images/CREDITS.md`](images/CREDITS.md). איורי ה‑SVG המקוריים (מ‑`tools/make_day_art.py`) נשארו כ‑fallback ונטענים אוטומטית אם יום כלשהו יאבד את שדה ה‑`img` שלו.
 
-להחלפה בתמונה אמיתית: לשים את הקובץ ב‑`images/` ולהוסיף לאותו יום ב‑`days.json`:
+**להחליף תמונה לאחרת:**
 
-```json
-"img": "images/yosemite-valley.jpg"
-```
+1. עדכנו את `PHOTOS` ב‑`tools/fetch_day_photos.py` עם ה‑title המדויק מ‑Commons, או שימו קובץ משלכם ישירות ב‑`images/day-<iso>.webp`.
+2. אם דרך הסקריפט: `rm images/day-<iso>.webp && python3 tools/fetch_day_photos.py` (הוא מדלג על קבצים קיימים, אז תמיד למחוק קודם).
+3. הסקריפט דוחה אוטומטית כל רישיון שאינו CC0/Public Domain/CC BY(-SA) — אין דרך "לטעות" ולהכניס תמונה עם רישיון בעייתי.
+4. עדכנו את `imgAlt` לאותו יום ב‑`data/days.json`.
+5. אם שיניתם שם קובץ (לא רק תוכן) — לעדכן את `DAY_NUMS`/`SHELL` ב‑`sw.js` ולהעלות את `CACHE`.
 
-מומלץ WebP או JPEG ברוחב ~1200px ומתחת ל‑150KB, ולהוסיף את הנתיב ל‑`SHELL` שב‑`sw.js` כדי שייכנס למטמון האופליין.
+מפרט: WebP, 1600×640, עד ~148KB. גיבוי לתמונה מקורית לא נשמר בריפו — רק ה‑title ב‑`PHOTOS` מצביע חזרה למקור.
 
 ---
 
